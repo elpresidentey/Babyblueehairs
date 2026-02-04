@@ -1,0 +1,460 @@
+import { useState, useMemo } from 'react'
+import ProductCard from '../components/ProductCard'
+
+// Mock products data
+const allProducts = [
+  {
+    id: '1',
+    name: 'Silky Straight Bundle',
+    price: 45000,
+    image: '',
+    imageKeyword: 'silky straight bundle hair',
+    category: 'Bundles',
+    hairType: 'Straight',
+    length: '18"',
+    texture: 'Silky',
+    rating: 4.8,
+    reviews: 124,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '2',
+    name: 'Body Wave Closure',
+    price: 35000,
+    image: '',
+    imageKeyword: 'body wave closure hair',
+    category: 'Closures & Frontals',
+    hairType: 'Body Wave',
+    length: '14"',
+    texture: 'Natural',
+    rating: 4.6,
+    reviews: 89,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423'],
+    inStock: true,
+    onSale: true,
+    originalPrice: 42000,
+  },
+  {
+    id: '3',
+    name: 'Curly Lace Front Wig',
+    price: 55000,
+    image: '',
+    imageKeyword: 'curly lace front wig',
+    category: 'Wigs',
+    hairType: 'Curly',
+    length: '20"',
+    texture: 'Curly',
+    rating: 4.9,
+    reviews: 203,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513', '#D2691E'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '4',
+    name: 'Deep Wave Bundle',
+    price: 48000,
+    image: '',
+    imageKeyword: 'deep wave bundle hair',
+    category: 'Bundles',
+    hairType: 'Deep Wave',
+    length: '22"',
+    texture: 'Wavy',
+    rating: 4.7,
+    reviews: 156,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '5',
+    name: 'Loose Wave Frontal',
+    price: 40000,
+    image: '',
+    imageKeyword: 'loose wave frontal hair',
+    category: 'Closures & Frontals',
+    hairType: 'Loose Wave',
+    length: '16"',
+    texture: 'Wavy',
+    rating: 4.5,
+    reviews: 67,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513'],
+    inStock: true,
+    onSale: true,
+    originalPrice: 45000,
+  },
+  {
+    id: '6',
+    name: 'Straight Bob Wig',
+    price: 42000,
+    image: '',
+    imageKeyword: 'straight bob wig',
+    category: 'Wigs',
+    hairType: 'Straight',
+    length: '12"',
+    texture: 'Silky',
+    rating: 4.4,
+    reviews: 98,
+    colors: ['#1B1B1B', '#3D2817', '#F5DEB3'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '7',
+    name: 'Hair Accessories Set',
+    price: 15000,
+    image: '',
+    imageKeyword: 'hair accessories beauty',
+    category: 'Accessories',
+    hairType: 'N/A',
+    length: 'N/A',
+    texture: 'N/A',
+    rating: 4.3,
+    reviews: 45,
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '8',
+    name: 'Kinky Curly Bundle',
+    price: 50000,
+    image: '',
+    imageKeyword: 'kinky curly bundle hair',
+    category: 'Bundles',
+    hairType: 'Kinky Curly',
+    length: '24"',
+    texture: 'Curly',
+    rating: 4.8,
+    reviews: 178,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513', '#D2691E'],
+    inStock: false,
+    onSale: false,
+  },
+  {
+    id: '9',
+    name: 'Water Wave Bundle',
+    price: 46000,
+    image: '',
+    imageKeyword: 'water wave bundle hair',
+    category: 'Bundles',
+    hairType: 'Water Wave',
+    length: '20"',
+    texture: 'Wavy',
+    rating: 4.7,
+    reviews: 142,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '10',
+    name: 'Straight Lace Front Wig',
+    price: 58000,
+    image: '',
+    imageKeyword: 'straight lace front wig',
+    category: 'Wigs',
+    hairType: 'Straight',
+    length: '22"',
+    texture: 'Silky',
+    rating: 4.9,
+    reviews: 267,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513', '#F5DEB3'],
+    inStock: true,
+    onSale: true,
+    originalPrice: 65000,
+  },
+  {
+    id: '11',
+    name: '360 Lace Frontal',
+    price: 52000,
+    image: '',
+    imageKeyword: '360 lace frontal hair',
+    category: 'Closures & Frontals',
+    hairType: 'Body Wave',
+    length: '18"',
+    texture: 'Natural',
+    rating: 4.8,
+    reviews: 189,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '12',
+    name: 'Curly Bundle Set',
+    price: 47000,
+    image: '',
+    imageKeyword: 'curly bundle hair',
+    category: 'Bundles',
+    hairType: 'Curly',
+    length: '20"',
+    texture: 'Curly',
+    rating: 4.6,
+    reviews: 134,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513', '#D2691E'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '13',
+    name: 'Wavy Bob Wig',
+    price: 38000,
+    image: '',
+    imageKeyword: 'wavy bob wig',
+    category: 'Wigs',
+    hairType: 'Body Wave',
+    length: '14"',
+    texture: 'Wavy',
+    rating: 4.5,
+    reviews: 112,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423'],
+    inStock: true,
+    onSale: true,
+    originalPrice: 42000,
+  },
+  {
+    id: '14',
+    name: 'Straight Closure',
+    price: 32000,
+    image: '',
+    imageKeyword: 'straight closure hair',
+    category: 'Closures & Frontals',
+    hairType: 'Straight',
+    length: '16"',
+    texture: 'Silky',
+    rating: 4.7,
+    reviews: 156,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '15',
+    name: 'Ombre Bundle Set',
+    price: 54000,
+    image: '',
+    imageKeyword: 'ombre bundle hair',
+    category: 'Bundles',
+    hairType: 'Straight',
+    length: '24"',
+    texture: 'Silky',
+    rating: 4.9,
+    reviews: 298,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513', '#F5DEB3', '#FFD700'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '16',
+    name: 'Curly Pixie Wig',
+    price: 35000,
+    image: '',
+    imageKeyword: 'curly pixie wig',
+    category: 'Wigs',
+    hairType: 'Curly',
+    length: '8"',
+    texture: 'Curly',
+    rating: 4.4,
+    reviews: 87,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '17',
+    name: 'Hair Clips & Pins',
+    price: 8000,
+    image: '',
+    imageKeyword: 'hair accessories beauty',
+    category: 'Accessories',
+    hairType: 'N/A',
+    length: 'N/A',
+    texture: 'N/A',
+    rating: 4.2,
+    reviews: 56,
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '18',
+    name: 'Tight Curly Bundle',
+    price: 49000,
+    image: '',
+    imageKeyword: 'tight curly bundle hair',
+    category: 'Bundles',
+    hairType: 'Kinky Curly',
+    length: '22"',
+    texture: 'Curly',
+    rating: 4.7,
+    reviews: 167,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '19',
+    name: 'Long Straight Wig',
+    price: 62000,
+    image: '',
+    imageKeyword: 'long straight wig',
+    category: 'Wigs',
+    hairType: 'Straight',
+    length: '26"',
+    texture: 'Silky',
+    rating: 4.9,
+    reviews: 312,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513', '#F5DEB3'],
+    inStock: true,
+    onSale: true,
+    originalPrice: 68000,
+  },
+  {
+    id: '20',
+    name: 'Hair Scarf Collection',
+    price: 12000,
+    image: '',
+    imageKeyword: 'hair accessories beauty',
+    category: 'Accessories',
+    hairType: 'N/A',
+    length: 'N/A',
+    texture: 'N/A',
+    rating: 4.5,
+    reviews: 78,
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '21',
+    name: 'Beachy Wave Bundle',
+    price: 44000,
+    image: '',
+    imageKeyword: 'beachy wave bundle hair',
+    category: 'Bundles',
+    hairType: 'Loose Wave',
+    length: '20"',
+    texture: 'Wavy',
+    rating: 4.6,
+    reviews: 145,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513', '#F5DEB3'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '22',
+    name: '13x4 Lace Frontal',
+    price: 48000,
+    image: '',
+    imageKeyword: 'lace frontal hair',
+    category: 'Closures & Frontals',
+    hairType: 'Body Wave',
+    length: '18"',
+    texture: 'Natural',
+    rating: 4.8,
+    reviews: 201,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423', '#8B4513'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '23',
+    name: 'Short Curly Wig',
+    price: 39000,
+    image: '',
+    imageKeyword: 'short curly wig',
+    category: 'Wigs',
+    hairType: 'Curly',
+    length: '10"',
+    texture: 'Curly',
+    rating: 4.5,
+    reviews: 103,
+    colors: ['#1B1B1B', '#3D2817', '#6B4423'],
+    inStock: true,
+    onSale: false,
+  },
+  {
+    id: '24',
+    name: 'Hair Brush Set',
+    price: 10000,
+    image: '',
+    imageKeyword: 'hair accessories beauty',
+    category: 'Accessories',
+    hairType: 'N/A',
+    length: 'N/A',
+    texture: 'N/A',
+    rating: 4.4,
+    reviews: 67,
+    inStock: true,
+    onSale: false,
+  },
+]
+
+type SortOption = 'price-low' | 'price-high' | 'newest' | 'popular'
+
+export default function Products() {
+  const [sortBy, setSortBy] = useState<SortOption>('newest')
+
+  const sortedProducts = useMemo(() => {
+    const products = [...allProducts]
+
+    // Sort
+    switch (sortBy) {
+      case 'price-low':
+        products.sort((a, b) => a.price - b.price)
+        break
+      case 'price-high':
+        products.sort((a, b) => b.price - a.price)
+        break
+      case 'newest':
+        // Already sorted by id (newest first)
+        break
+      case 'popular':
+        // Sort by reviews (most popular first)
+        products.sort((a, b) => (b.reviews || 0) - (a.reviews || 0))
+        break
+    }
+
+    return products
+  }, [sortBy])
+
+  return (
+    <div className="min-h-screen bg-white py-12 px-4">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-dark-blue mb-4">
+            Our Products
+          </h1>
+          <p className="text-gray-600 text-lg">
+            Discover premium luxury hair products
+          </p>
+        </div>
+
+        {/* Sort and Product Count */}
+        <div className="flex items-center justify-between mb-8">
+          <span className="text-sm text-gray-600">
+            {sortedProducts.length} products
+          </span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as SortOption)}
+            className="p-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-baby-blue-600"
+          >
+            <option value="newest">Newest</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="popular">Popular</option>
+          </select>
+        </div>
+
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {sortedProducts.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}

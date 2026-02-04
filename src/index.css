@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap');
+
+@layer base {
+  * {
+    font-family: 'Cabin', system-ui, sans-serif;
+  }
+  
+  body {
+    background-color: #ffffff; /* white */
+    color: #0a1628; /* dark blue */
+    font-family: 'Cabin', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .luxury-gradient {
+    background: linear-gradient(to bottom right, #f0f9ff, #faf9f6, #e8dcc6);
+  }
+  
+  .btn-primary {
+    background-color: #0a1628; /* dark blue */
+    color: #ffffff; /* white */
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+  }
+  
+  .btn-primary:hover {
+    background-color: rgba(10, 22, 40, 0.9);
+    transform: scale(1.05);
+  }
+  
+  .btn-primary:active {
+    transform: scale(0.95);
+  }
+  
+  .btn-secondary {
+    background-color: transparent;
+    border: 2px solid #0a1628; /* dark blue */
+    color: #0a1628; /* dark blue */
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+  }
+  
+  .btn-secondary:hover {
+    background-color: #0a1628; /* dark blue */
+    color: #ffffff; /* white */
+  }
+  
+  .card-luxury {
+    @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden;
+  }
+  
+  .text-luxury {
+    font-family: 'Cabin', sans-serif;
+    color: #0a1628; /* dark blue */
+  }
+}
