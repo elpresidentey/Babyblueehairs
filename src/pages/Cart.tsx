@@ -1,8 +1,31 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react'
+import { Trash2, Plus, Minus, ShoppingBag, Eye, Truck, CheckCircle } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import StockImage from '../components/StockImage'
+
+// Mock order history for cart page
+const recentOrders = [
+  {
+    id: 'ORD-2024-001',
+    date: '2024-01-15',
+    status: 'delivered',
+    total: 285000,
+    items: [
+      { id: '1', name: 'Silky Straight Bundle', price: 145000, quantity: 1 },
+      { id: '2', name: 'Body Wave Closure', price: 135000, quantity: 1 },
+    ],
+  },
+  {
+    id: 'ORD-2024-002',
+    date: '2024-01-28',
+    status: 'shipped',
+    total: 155000,
+    items: [
+      { id: '3', name: 'Curly Lace Front Wig', price: 155000, quantity: 1 },
+    ],
+  },
+]
 
 export default function Cart() {
   const { items, updateQuantity, removeFromCart, getTotal, clearCart } = useCart()
@@ -100,6 +123,58 @@ export default function Cart() {
             >
               Clear Cart
             </button>
+
+            {/* Order History */}
+            <div className="mt-8">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-xl font-serif font-bold text-charcoal">Recent Orders</h3>
+                <Link to="/profile" className="text-baby-blue-600 hover:text-baby-blue-700 text-sm font-medium">
+                  View All
+                </Link>
+              </div>
+              <div className="space-y-3">
+                {recentOrders.map((order) => (
+                  <motion.div
+                    key={order.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="bg-white rounded-lg p-4 border border-gray-200"
+                  >
+                    <div className="flex items-start justify-between mb-2">
+                      <div>
+                        <p className="font-medium text-charcoal">{order.id}</p>
+                        <p className="text-sm text-gray-600">{new Date(order.date).toLocaleDateString()}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {order.status === 'delivered' ? (
+                          <CheckCircle className="w-4 h-4 text-green-600" />
+                        ) : (
+                          <Truck className="w-4 h-4 text-blue-600" />
+                        )}
+                        <span className={`text-sm font-medium ${
+                          order.status === 'delivered' ? 'text-green-600' : 'text-blue-600'
+                        }`}>
+                          {order.status === 'delivered' ? 'Delivered' : 'Shipped'}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-sm text-gray-600 mb-2">
+                      {order.items.length} item{order.items.length > 1 ? 's' : ''}
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="font-bold text-charcoal">₦{order.total.toLocaleString()}</span>
+                      <Link
+                        to={`/profile?order=${order.id}`}
+                        className="text-baby-blue-600 hover:text-baby-blue-700 text-sm font-medium flex items-center gap-1"
+                      >
+                        <Eye className="w-3 h-3" />
+                        View
+                      </Link>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Order Summary */}

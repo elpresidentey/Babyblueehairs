@@ -11,7 +11,7 @@ const featuredProducts = [
   {
     id: '1',
     name: 'Silky Straight Bundle',
-    price: 75000,
+    price: 145000,
     image: '',
     imageKeyword: 'silky straight hair',
     category: 'Bundles',
@@ -19,7 +19,7 @@ const featuredProducts = [
   {
     id: '2',
     name: 'Body Wave Closure',
-    price: 55000,
+    price: 135000,
     image: '',
     imageKeyword: 'body wave hair',
     category: 'Closures & Frontals',
@@ -27,7 +27,7 @@ const featuredProducts = [
   {
     id: '3',
     name: 'Curly Lace Front Wig',
-    price: 85000,
+    price: 155000,
     image: '',
     imageKeyword: 'curly lace front hair',
     category: 'Wigs',

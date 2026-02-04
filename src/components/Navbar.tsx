@@ -171,6 +171,15 @@ export default function Navbar() {
                       </Link>
                     </motion.div>
                     <motion.div variants={itemVariants}>
+                      <Link
+                        to="/profile"
+                        className="block py-2 text-charcoal hover:text-baby-blue-600"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Profile
+                      </Link>
+                    </motion.div>
+                    <motion.div variants={itemVariants}>
                       <button
                         onClick={() => {
                           logout()
