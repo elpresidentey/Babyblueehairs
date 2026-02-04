@@ -41,7 +41,6 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {[
-              { to: '/', label: 'Home' },
               { to: '/products', label: 'Shop' },
               { to: '/contact', label: 'Contact' },
             ].map((item) => (
@@ -152,7 +151,6 @@ export default function Navbar() {
                 className="py-4"
               >
                 {[ 
-                  { to: '/', label: 'Home' },
                   { to: '/products', label: 'Shop' },
                   { to: '/wishlist', label: 'Wishlist' },
                   { to: '/contact', label: 'Contact' },

@@ -116,11 +116,14 @@ export default function Checkout() {
     // In a real app, integrate with Paystack/Flutterwave here.
     // (No console logs in production UX.)
 
-    clearCart()
-    
-    // Use window.location to avoid React Router state issues
+    // Navigate first, then clear cart
     const orderId = `BB-${Date.now()}`
     window.location.href = `/checkout/success?orderId=${orderId}`
+    
+    // Clear cart after navigation starts
+    setTimeout(() => {
+      clearCart()
+    }, 100)
   }
 
   const handleTestPayment = async () => {
@@ -128,12 +131,17 @@ export default function Checkout() {
     console.log('Test payment started')
     setIsProcessing(true)
     await new Promise((resolve) => setTimeout(resolve, 1000))
-    console.log('Clearing cart and navigating to success')
-    clearCart()
+    console.log('Navigating to success page')
     
-    // Use window.location to avoid React Router state issues
+    // Navigate first, then clear cart
     const orderId = `BB-TEST-${Date.now()}`
     window.location.href = `/checkout/success?orderId=${orderId}`
+    
+    // Clear cart after navigation starts
+    setTimeout(() => {
+      console.log('Clearing cart')
+      clearCart()
+    }, 100)
   }
 
   return (
