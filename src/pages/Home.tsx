@@ -59,13 +59,13 @@ export default function Home() {
       return x / 233280
     }
 
-    return Array.from({ length: 14 }).map((_, i) => {
+    return Array.from({ length: 18 }).map((_, i) => {
       const left = Math.round(seeded(i + 1) * 90 + 5)
       const top = Math.round(seeded(i + 11) * 70 + 10)
       const delay = seeded(i + 21) * 2.2
-      const size = Math.round(seeded(i + 31) * 6 + 6)
+      const size = Math.round(seeded(i + 31) * 10 + 12)
       const duration = 2.2 + seeded(i + 41) * 2.4
-      const opacity = 0.22 + seeded(i + 51) * 0.25
+      const opacity = 0.4 + seeded(i + 51) * 0.3
       return { id: i, left, top, delay, size, duration, opacity }
     })
   }, [])
@@ -83,6 +83,13 @@ export default function Home() {
         />
 
         <div className="absolute inset-0" aria-hidden="true">
+          <motion.div
+            className="absolute top-4 left-1/2 -translate-x-1/2 text-xs text-dark-blue/40 bg-white/80 backdrop-blur px-3 py-1 rounded-full shadow-sm"
+            animate={{ opacity: [0.4, 0.7, 0.4] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
+            ✨ Drag the sparkles
+          </motion.div>
           {sparkles.map((s) => (
             <motion.div
               key={s.id}
@@ -90,6 +97,8 @@ export default function Home() {
               dragMomentum={false}
               dragElastic={0.15}
               dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+              whileHover={{ scale: 1.3 }}
+              whileDrag={{ scale: 1.2, boxShadow: '0 0 32px rgba(59,130,246,0.6)' }}
               onDragEnd={(e, info) => {
                 const bounds = (e.target as HTMLElement).getBoundingClientRect()
                 const parent = (e.target as HTMLElement).parentElement?.getBoundingClientRect()
@@ -103,21 +112,21 @@ export default function Home() {
               animate={{
                 x: 0,
                 y: 0,
-                scale: [1, 1.1, 1],
+                scale: [1, 1.15, 1],
               }}
               transition={{
                 x: { type: 'spring', stiffness: 60, damping: 14, delay: 2 },
                 y: { type: 'spring', stiffness: 60, damping: 14, delay: 2 },
                 scale: { duration: s.duration, repeat: Infinity, ease: 'easeInOut' },
               }}
-              className="absolute rounded-full bg-white cursor-grab active:cursor-grabbing"
+              className="absolute rounded-full bg-gradient-to-br from-white to-baby-blue-100 cursor-grab active:cursor-grabbing"
               style={{
                 left: `${s.left}%`,
                 top: `${s.top}%`,
                 width: s.size,
                 height: s.size,
                 opacity: s.opacity,
-                boxShadow: '0 0 24px rgba(255,255,255,0.35)',
+                boxShadow: '0 0 28px rgba(255,255,255,0.6), 0 0 44px rgba(59,130,246,0.2)',
               }}
             />
           ))}
