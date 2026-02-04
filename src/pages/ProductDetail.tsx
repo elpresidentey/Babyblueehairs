@@ -9,7 +9,7 @@ const productData: Record<string, any> = {
   '1': {
     id: '1',
     name: 'Silky Straight Bundle',
-    price: 45000,
+    price: 850000,
     imageKeyword: 'silky straight hair',
     images: ['silky straight hair', 'silky straight hair', 'silky straight hair'],
     category: 'Bundles',
@@ -44,7 +44,7 @@ const productData: Record<string, any> = {
   '2': {
     id: '2',
     name: 'Body Wave Closure',
-    price: 35000,
+    price: 650000,
     imageKeyword: 'body wave hair',
     images: ['body wave hair', 'body wave hair'],
     category: 'Closures & Frontals',
