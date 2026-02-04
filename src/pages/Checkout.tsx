@@ -44,10 +44,12 @@ export default function Checkout() {
 
   // Avoid navigating during render (can cause warnings / weird loops).
   useEffect(() => {
+    console.log('Checkout - Cart items:', items.length, items)
     if (items.length === 0) {
+      console.log('Checkout - Redirecting to cart, no items found')
       navigate('/cart', { replace: true })
     }
-  }, [items.length, navigate])
+  }, [items, navigate])
 
   if (items.length === 0) {
     return null

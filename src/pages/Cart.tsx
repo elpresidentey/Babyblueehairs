@@ -34,10 +34,11 @@ export default function Cart() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log('Cart - Items:', items.length, items)
     if (location.state?.scrollToTop) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-  }, [location.state])
+  }, [location.state, items])
 
   if (items.length === 0) {
     return (
