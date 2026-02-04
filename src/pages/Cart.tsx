@@ -10,19 +10,19 @@ const recentOrders = [
     id: 'ORD-2024-001',
     date: '2024-01-15',
     status: 'delivered',
-    total: 285000,
+    total: 850000,
     items: [
-      { id: '1', name: 'Silky Straight Bundle', price: 145000, quantity: 1 },
-      { id: '2', name: 'Body Wave Closure', price: 135000, quantity: 1 },
+      { id: '1', name: 'Silky Straight Bundle', price: 450000, quantity: 1 },
+      { id: '2', name: 'Body Wave Closure', price: 350000, quantity: 1 },
     ],
   },
   {
     id: 'ORD-2024-002',
     date: '2024-01-28',
     status: 'shipped',
-    total: 155000,
+    total: 550000,
     items: [
-      { id: '3', name: 'Curly Lace Front Wig', price: 155000, quantity: 1 },
+      { id: '3', name: 'Curly Lace Front Wig', price: 550000, quantity: 1 },
     ],
   },
 ]
