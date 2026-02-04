@@ -25,14 +25,14 @@ export default function Checkout() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('paystack')
 
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'john.doe@example.com',
+    phone: '+234 800 000 0000',
+    address: '123 Ikoyi Road',
+    city: 'Lagos',
+    state: 'Lagos',
+    zipCode: '101233',
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -103,6 +103,16 @@ export default function Checkout() {
     clearCart()
     navigate('/checkout/success', {
       state: { orderId: `BB-${Date.now()}` },
+    })
+  }
+
+  const handleTestPayment = async () => {
+    // Quick test without validation
+    setIsProcessing(true)
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    clearCart()
+    navigate('/checkout/success', {
+      state: { orderId: `BB-TEST-${Date.now()}` },
     })
   }
 
@@ -574,6 +584,17 @@ export default function Checkout() {
                         Complete Order
                       </>
                     )}
+                  </button>
+                </div>
+                
+                {/* Test Payment Button */}
+                <div className="mt-4 pt-4 border-t border-dashed border-gray-300">
+                  <button
+                    onClick={handleTestPayment}
+                    disabled={isProcessing}
+                    className="w-full py-2 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    🧪 Test Payment (Skip Validation)
                   </button>
                 </div>
               </motion.div>
