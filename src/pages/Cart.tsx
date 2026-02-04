@@ -1,6 +1,7 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Trash2, Plus, Minus, ShoppingBag, Eye, Truck, CheckCircle } from 'lucide-react'
+import { useEffect } from 'react'
 import { useCart } from '../context/CartContext'
 import StockImage from '../components/StockImage'
 
@@ -29,6 +30,13 @@ const recentOrders = [
 
 export default function Cart() {
   const { items, updateQuantity, removeFromCart, getTotal, clearCart } = useCart()
+  const location = useLocation()
+
+  useEffect(() => {
+    if (location.state?.scrollToTop) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [location.state])
 
   if (items.length === 0) {
     return (

@@ -68,13 +68,8 @@ export default function ProductCard({ product }: ProductCardProps) {
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
     
-    // Navigate to cart and scroll to top
-    setTimeout(() => {
-      navigate('/cart')
-      setTimeout(() => {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
-      }, 100)
-    }, 500)
+    // Navigate to cart immediately with scroll to top
+    navigate('/cart', { state: { scrollToTop: true } })
   }
 
   const handleWishlist = (e: React.MouseEvent) => {
