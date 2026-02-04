@@ -1,13 +1,21 @@
 import { useLocation, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { CheckCircle, Package, Mail, Home, ShoppingBag } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 export default function CheckoutSuccess() {
   const location = useLocation()
-  const orderId = location.state?.orderId || 'BB-000000'
+  const [orderId, setOrderId] = useState('BB-000000')
   
-  console.log('CheckoutSuccess - Order ID:', orderId)
-  console.log('CheckoutSuccess - Location state:', location.state)
+  useEffect(() => {
+    // Get order ID from URL query params
+    const params = new URLSearchParams(location.search)
+    const urlOrderId = params.get('orderId')
+    if (urlOrderId) {
+      setOrderId(urlOrderId)
+    }
+    console.log('CheckoutSuccess - Order ID:', urlOrderId || orderId)
+  }, [location.search, orderId])
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4">

@@ -117,9 +117,10 @@ export default function Checkout() {
     // (No console logs in production UX.)
 
     clearCart()
-    navigate('/checkout/success', {
-      state: { orderId: `BB-${Date.now()}` },
-    })
+    
+    // Use window.location to avoid React Router state issues
+    const orderId = `BB-${Date.now()}`
+    window.location.href = `/checkout/success?orderId=${orderId}`
   }
 
   const handleTestPayment = async () => {
@@ -129,9 +130,10 @@ export default function Checkout() {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     console.log('Clearing cart and navigating to success')
     clearCart()
-    navigate('/checkout/success', {
-      state: { orderId: `BB-TEST-${Date.now()}` },
-    })
+    
+    // Use window.location to avoid React Router state issues
+    const orderId = `BB-TEST-${Date.now()}`
+    window.location.href = `/checkout/success?orderId=${orderId}`
   }
 
   return (
