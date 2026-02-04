@@ -84,9 +84,33 @@ export default function Home() {
 
         <div className="absolute inset-0" aria-hidden="true">
           {sparkles.map((s) => (
-            <motion.span
+            <motion.div
               key={s.id}
-              className="absolute rounded-full bg-white"
+              drag
+              dragMomentum={false}
+              dragElastic={0.15}
+              dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
+              onDragEnd={(e, info) => {
+                const bounds = (e.target as HTMLElement).getBoundingClientRect()
+                const parent = (e.target as HTMLElement).parentElement?.getBoundingClientRect()
+                if (!parent) return
+                const vx = info.offset.x * 0.15
+                const vy = info.offset.y * 0.15
+                const tx = Math.max(0, Math.min(parent.width - bounds.width, s.left + vx))
+                const ty = Math.max(0, Math.min(parent.height - bounds.height, s.top + vy))
+                ;(e.target as HTMLElement).style.transform = `translate(${tx - s.left}%, ${ty - s.top}%)`
+              }}
+              animate={{
+                x: 0,
+                y: 0,
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                x: { type: 'spring', stiffness: 60, damping: 14, delay: 2 },
+                y: { type: 'spring', stiffness: 60, damping: 14, delay: 2 },
+                scale: { duration: s.duration, repeat: Infinity, ease: 'easeInOut' },
+              }}
+              className="absolute rounded-full bg-white cursor-grab active:cursor-grabbing"
               style={{
                 left: `${s.left}%`,
                 top: `${s.top}%`,
@@ -94,13 +118,6 @@ export default function Home() {
                 height: s.size,
                 opacity: s.opacity,
                 boxShadow: '0 0 24px rgba(255,255,255,0.35)',
-              }}
-              animate={{ y: [0, -12, 0], opacity: [s.opacity, s.opacity + 0.25, s.opacity] }}
-              transition={{
-                duration: s.duration,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: s.delay,
               }}
             />
           ))}
