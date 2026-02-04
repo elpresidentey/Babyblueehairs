@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Trash2, Plus, Minus, ShoppingBag, Eye, Truck, CheckCircle } from 'lucide-react'
 import { useEffect } from 'react'
@@ -31,6 +31,7 @@ const recentOrders = [
 export default function Cart() {
   const { items, updateQuantity, removeFromCart, getTotal, clearCart } = useCart()
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (location.state?.scrollToTop) {
@@ -211,10 +212,7 @@ export default function Cart() {
 
               <button
                 onClick={() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                  setTimeout(() => {
-                    window.location.href = '/checkout'
-                  }, 300)
+                  navigate('/checkout')
                 }}
                 className="btn-primary w-full block text-center mb-4"
               >
