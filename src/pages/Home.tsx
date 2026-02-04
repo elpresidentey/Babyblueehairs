@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useMemo } from 'react'
 import ProductCard from '../components/ProductCard'
@@ -11,7 +11,7 @@ const featuredProducts = [
   {
     id: '1',
     name: 'Silky Straight Bundle',
-    price: 45000,
+    price: 75000,
     image: '',
     imageKeyword: 'silky straight hair',
     category: 'Bundles',
@@ -19,7 +19,7 @@ const featuredProducts = [
   {
     id: '2',
     name: 'Body Wave Closure',
-    price: 35000,
+    price: 55000,
     image: '',
     imageKeyword: 'body wave hair',
     category: 'Closures & Frontals',
@@ -27,7 +27,7 @@ const featuredProducts = [
   {
     id: '3',
     name: 'Curly Lace Front Wig',
-    price: 55000,
+    price: 85000,
     image: '',
     imageKeyword: 'curly lace front hair',
     category: 'Wigs',
@@ -53,11 +53,6 @@ const testimonials = [
 ]
 
 export default function Home() {
-  const shouldReduceMotion = useReducedMotion()
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const spotlight = useMotionTemplate`radial-gradient(520px 520px at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.55), rgba(255,255,255,0) 60%)`
-
   const sparkles = useMemo(() => {
     const seeded = (n: number) => {
       const x = (n * 9301 + 49297) % 233280
@@ -78,52 +73,13 @@ export default function Home() {
   return (
     <div className="w-full">
       {/* Hero Section */}
-      <section
-        className="relative h-[90vh] flex items-center justify-center overflow-hidden"
-        onPointerMove={(e) => {
-          if (shouldReduceMotion) return
-          const rect = (e.currentTarget as HTMLElement).getBoundingClientRect()
-          mouseX.set(e.clientX - rect.left)
-          mouseY.set(e.clientY - rect.top)
-        }}
-        onPointerLeave={() => {
-          if (shouldReduceMotion) return
-          mouseX.set(0)
-          mouseY.set(0)
-        }}
-      >
-        <div className="absolute inset-0 aurora-bg" />
-        <div className="absolute inset-0 noise-overlay opacity-[0.16]" />
-
-        {!shouldReduceMotion && (
-          <motion.div
-            aria-hidden="true"
-            className="absolute inset-0"
-            style={{ backgroundImage: spotlight, mixBlendMode: 'overlay' }}
-          />
-        )}
-
-        <motion.div
-          aria-hidden="true"
-          className="absolute -top-40 -left-40 h-[34rem] w-[34rem] rounded-full bg-baby-blue-200/60 blur-3xl"
-          animate={{ x: [0, 60, 0], y: [0, 35, 0], scale: [1, 1.08, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ mixBlendMode: 'multiply' }}
-        />
-        <motion.div
-          aria-hidden="true"
-          className="absolute -bottom-44 -right-40 h-[36rem] w-[36rem] rounded-full bg-nude/70 blur-3xl"
-          animate={{ x: [0, -55, 0], y: [0, -30, 0], scale: [1, 1.06, 1] }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ mixBlendMode: 'multiply' }}
-        />
-
+      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-white">
         <StockImage
           width={1920}
           height={1080}
           keyword="salon,hair"
           alt="Hair salon"
-          className="absolute inset-0 w-full h-full object-cover opacity-[0.10]"
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.04]"
         />
 
         <div className="absolute inset-0" aria-hidden="true">
@@ -158,7 +114,7 @@ export default function Home() {
         >
           <motion.div
             variants={fadeUpItem}
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-dark-blue/10 bg-white/60 backdrop-blur px-4 py-2 text-xs font-semibold tracking-wide text-dark-blue shadow-sm"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-dark-blue/12 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-dark-blue shadow-sm transition-all hover:border-dark-blue/20 hover:shadow-md"
           >
             <Sparkles className="h-4 w-4 text-baby-blue-600" />
             Premium Nigerian Hair
@@ -184,13 +140,21 @@ export default function Home() {
             variants={fadeUpItem}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <motion.div whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <motion.div
+              whileHover={{ y: -3, scale: 1.03, boxShadow: '0 8px 20px rgba(10,22,40,0.12)' }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            >
               <Link to="/products" className="btn-primary inline-flex items-center justify-center">
                 Shop Now
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </motion.div>
-            <motion.div whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <motion.div
+              whileHover={{ y: -3, scale: 1.03, boxShadow: '0 8px 20px rgba(10,22,40,0.08)' }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            >
               <Link to="/products" className="btn-secondary inline-flex items-center justify-center">
                 Explore Collections
               </Link>
@@ -201,15 +165,30 @@ export default function Home() {
             variants={fadeUpItem}
             className="mt-10 flex items-center justify-center gap-6 text-sm text-dark-blue/70"
           >
-            <span className="rounded-full bg-white/50 backdrop-blur px-3 py-1 border border-dark-blue/10">100% Human Hair</span>
-            <span className="rounded-full bg-white/50 backdrop-blur px-3 py-1 border border-dark-blue/10">Fast Shipping</span>
-            <span className="rounded-full bg-white/50 backdrop-blur px-3 py-1 border border-dark-blue/10">Luxury Finish</span>
+            <motion.span
+              whileHover={{ scale: 1.08, y: -1 }}
+              className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
+            >
+              100% Human Hair
+            </motion.span>
+            <motion.span
+              whileHover={{ scale: 1.08, y: -1 }}
+              className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
+            >
+              Fast Shipping
+            </motion.span>
+            <motion.span
+              whileHover={{ scale: 1.08, y: -1 }}
+              className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
+            >
+              Luxury Finish
+            </motion.span>
           </motion.div>
         </motion.div>
 
         <motion.div
           aria-hidden="true"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 h-10 w-6 rounded-full border border-dark-blue/20 bg-white/40 backdrop-blur"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 h-10 w-6 rounded-full border border-dark-blue/20 bg-white shadow-sm"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
         >
@@ -336,30 +315,30 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-20 px-4 bg-white">
-        <div className="max-w-4xl mx-auto text-center relative overflow-hidden rounded-3xl border border-dark-blue/10">
-          <div className="absolute inset-0 aurora-bg opacity-60" />
-          <div className="absolute inset-0 noise-overlay opacity-[0.12]" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, ease: easeLuxury }}
+          className="max-w-4xl mx-auto text-center px-6 sm:px-10 py-16 rounded-3xl border border-dark-blue/8 bg-gradient-to-br from-white via-baby-blue-50/30 to-white shadow-xl"
+        >
+          <h2 className="text-4xl md:text-5xl font-serif font-bold text-dark-blue mb-6">
+            Ready to Elevate Your Style?
+          </h2>
+          <p className="text-xl text-gray-600 mb-8">
+            Join thousands of women who trust Baby Blue for their luxury hair needs
+          </p>
           <motion.div
-            initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.65, ease: easeLuxury }}
-            className="relative z-10 px-6 sm:px-10 py-16"
+            whileHover={{ y: -4, scale: 1.04, boxShadow: '0 12px 28px rgba(10,22,40,0.14)' }}
+            whileTap={{ scale: 0.96 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 22 }}
           >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-dark-blue mb-6">
-              Ready to Elevate Your Style?
-            </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Join thousands of women who trust Baby Blue for their luxury hair needs
-            </p>
-            <motion.div whileHover={{ y: -2, scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Link to="/products" className="btn-primary inline-flex items-center">
-                Start Shopping
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </motion.div>
+            <Link to="/products" className="btn-primary inline-flex items-center">
+              Start Shopping
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Link>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
     </div>
   )
