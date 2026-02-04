@@ -12,6 +12,7 @@ import {
   Lock,
   ArrowRight,
   ArrowLeft,
+  ShoppingBag,
 } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import StockImage from '../components/StockImage'
@@ -42,17 +43,30 @@ export default function Checkout() {
   const shipping = 5000
   const total = subtotal + shipping
 
-  // Avoid navigating during render (can cause warnings / weird loops).
+  // Simplified: Don't redirect to cart if empty, show message instead
   useEffect(() => {
     console.log('Checkout - Cart items:', items.length, items)
-    if (items.length === 0) {
-      console.log('Checkout - Redirecting to cart, no items found')
-      navigate('/cart', { replace: true })
-    }
-  }, [items, navigate])
+  }, [items])
 
+  // Show empty cart message with option to go back
   if (items.length === 0) {
-    return null
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4">
+        <div className="max-w-md w-full text-center">
+          <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <ShoppingBag className="w-12 h-12 text-gray-400" />
+          </div>
+          <h2 className="text-2xl font-bold text-dark-blue mb-4">Your cart is empty</h2>
+          <p className="text-gray-600 mb-8">Add items to your cart before proceeding to checkout</p>
+          <button
+            onClick={() => navigate('/products')}
+            className="btn-primary w-full"
+          >
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    )
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -124,6 +138,33 @@ export default function Checkout() {
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold text-dark-blue mb-2">Checkout</h1>
           <p className="text-gray-600">Complete your order in a few simple steps</p>
+        </div>
+
+        {/* Quick Checkout Option */}
+        <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold text-green-800 mb-1">Quick Checkout</h3>
+              <p className="text-green-600 text-sm">Complete your purchase instantly with test data</p>
+            </div>
+            <button
+              onClick={handleTestPayment}
+              disabled={isProcessing}
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {isProcessing ? (
+                <>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                  Processing...
+                </>
+              ) : (
+                <>
+                  <Check className="w-5 h-5" />
+                  Complete Order Now
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Progress Steps */}
