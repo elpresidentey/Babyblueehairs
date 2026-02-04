@@ -1,7 +1,18 @@
-import { useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { CreditCard, Truck, Check, MapPin, User, Mail, Phone, Lock, ArrowRight, ArrowLeft } from 'lucide-react'
+import {
+  CreditCard,
+  Truck,
+  Check,
+  MapPin,
+  User,
+  Mail,
+  Phone,
+  Lock,
+  ArrowRight,
+  ArrowLeft,
+} from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import StockImage from '../components/StockImage'
 
@@ -31,15 +42,20 @@ export default function Checkout() {
   const shipping = 5000
   const total = subtotal + shipping
 
+  // Avoid navigating during render (can cause warnings / weird loops).
+  useEffect(() => {
+    if (items.length === 0) {
+      navigate('/cart', { replace: true })
+    }
+  }, [items.length, navigate])
+
   if (items.length === 0) {
-    navigate('/cart')
     return null
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' })
     }
@@ -47,7 +63,7 @@ export default function Checkout() {
 
   const validateStep1 = () => {
     const newErrors: Record<string, string> = {}
-    
+
     if (!formData.firstName.trim()) newErrors.firstName = 'First name is required'
     if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required'
     if (!formData.email.trim()) {
@@ -70,32 +86,20 @@ export default function Checkout() {
 
   const handleNext = () => {
     if (step === 1) {
-      if (!validateStep1()) {
-        return
-      }
+      if (!validateStep1()) return
     }
     setStep(step + 1)
   }
 
   const handlePayment = async () => {
     setIsProcessing(true)
-    
+
     // Simulate payment processing
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
-    // In a real app, integrate with Paystack/Flutterwave here
-    if (paymentMethod === 'paystack') {
-      // Paystack integration would go here
-      console.log('Processing Paystack payment...')
-    } else if (paymentMethod === 'flutterwave') {
-      // Flutterwave integration would go here
-      console.log('Processing Flutterwave payment...')
-    } else if (paymentMethod === 'bank-transfer') {
-      // Bank transfer instructions
-      console.log('Bank transfer instructions...')
-    }
+    // In a real app, integrate with Paystack/Flutterwave here.
+    // (No console logs in production UX.)
 
-    // Clear cart and redirect to confirmation
     clearCart()
     navigate('/checkout/success', {
       state: { orderId: `BB-${Date.now()}` },
@@ -116,14 +120,18 @@ export default function Checkout() {
             <div className="flex flex-col items-center flex-1">
               <div
                 className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold transition-all ${
-                  step >= 1 
-                    ? 'bg-baby-blue-600 text-white shadow-lg scale-110' 
+                  step >= 1
+                    ? 'bg-baby-blue-600 text-white shadow-lg scale-110'
                     : 'bg-gray-200 text-gray-500'
                 }`}
               >
                 {step > 1 ? <Check className="w-6 h-6" /> : '1'}
               </div>
-              <p className={`text-xs mt-2 ${step >= 1 ? 'text-baby-blue-600 font-medium' : 'text-gray-500'}`}>
+              <p
+                className={`text-xs mt-2 ${
+                  step >= 1 ? 'text-baby-blue-600 font-medium' : 'text-gray-500'
+                }`}
+              >
                 Delivery
               </p>
             </div>
@@ -135,14 +143,18 @@ export default function Checkout() {
             <div className="flex flex-col items-center flex-1">
               <div
                 className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold transition-all ${
-                  step >= 2 
-                    ? 'bg-baby-blue-600 text-white shadow-lg scale-110' 
+                  step >= 2
+                    ? 'bg-baby-blue-600 text-white shadow-lg scale-110'
                     : 'bg-gray-200 text-gray-500'
                 }`}
               >
                 {step > 2 ? <Check className="w-6 h-6" /> : '2'}
               </div>
-              <p className={`text-xs mt-2 ${step >= 2 ? 'text-baby-blue-600 font-medium' : 'text-gray-500'}`}>
+              <p
+                className={`text-xs mt-2 ${
+                  step >= 2 ? 'text-baby-blue-600 font-medium' : 'text-gray-500'
+                }`}
+              >
                 Payment
               </p>
             </div>
@@ -154,14 +166,18 @@ export default function Checkout() {
             <div className="flex flex-col items-center flex-1">
               <div
                 className={`w-12 h-12 rounded-full flex items-center justify-center font-semibold transition-all ${
-                  step >= 3 
-                    ? 'bg-baby-blue-600 text-white shadow-lg scale-110' 
+                  step >= 3
+                    ? 'bg-baby-blue-600 text-white shadow-lg scale-110'
                     : 'bg-gray-200 text-gray-500'
                 }`}
               >
                 3
               </div>
-              <p className={`text-xs mt-2 ${step >= 3 ? 'text-baby-blue-600 font-medium' : 'text-gray-500'}`}>
+              <p
+                className={`text-xs mt-2 ${
+                  step >= 3 ? 'text-baby-blue-600 font-medium' : 'text-gray-500'
+                }`}
+              >
                 Review
               </p>
             </div>
@@ -243,9 +259,7 @@ export default function Checkout() {
                     }`}
                     placeholder="john.doe@example.com"
                   />
-                  {errors.email && (
-                    <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-                  )}
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                 </div>
 
                 <div className="mb-6">
@@ -263,9 +277,7 @@ export default function Checkout() {
                     }`}
                     placeholder="+234 800 000 0000"
                   />
-                  {errors.phone && (
-                    <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
-                  )}
+                  {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
                 </div>
 
                 <div className="mb-6">
@@ -283,9 +295,7 @@ export default function Checkout() {
                     }`}
                     placeholder="123 Main Street"
                   />
-                  {errors.address && (
-                    <p className="text-red-500 text-sm mt-1">{errors.address}</p>
-                  )}
+                  {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
                 </div>
 
                 <div className="grid md:grid-cols-3 gap-6 mb-8">
@@ -301,9 +311,7 @@ export default function Checkout() {
                       }`}
                       placeholder="Lagos"
                     />
-                    {errors.city && (
-                      <p className="text-red-500 text-sm mt-1">{errors.city}</p>
-                    )}
+                    {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                   </div>
                   <div>
                     <label className="block mb-2 font-medium text-gray-700">State *</label>
@@ -317,9 +325,7 @@ export default function Checkout() {
                       }`}
                       placeholder="Lagos"
                     />
-                    {errors.state && (
-                      <p className="text-red-500 text-sm mt-1">{errors.state}</p>
-                    )}
+                    {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
                   </div>
                   <div>
                     <label className="block mb-2 font-medium text-gray-700">Zip Code</label>
@@ -334,8 +340,8 @@ export default function Checkout() {
                   </div>
                 </div>
 
-                <button 
-                  onClick={handleNext} 
+                <button
+                  onClick={handleNext}
                   className="btn-primary w-full flex items-center justify-center gap-2 py-4 text-base font-semibold"
                 >
                   Continue to Payment
@@ -361,10 +367,10 @@ export default function Checkout() {
                 </div>
 
                 <div className="space-y-4 mb-8">
-                  <label 
+                  <label
                     className={`flex items-center p-5 border-2 rounded-xl cursor-pointer transition-all ${
-                      paymentMethod === 'paystack' 
-                        ? 'border-baby-blue-600 bg-baby-blue-50' 
+                      paymentMethod === 'paystack'
+                        ? 'border-baby-blue-600 bg-baby-blue-50'
                         : 'border-gray-200 hover:border-baby-blue-300 hover:bg-gray-50'
                     }`}
                   >
@@ -378,17 +384,15 @@ export default function Checkout() {
                     />
                     <div className="flex-1">
                       <div className="font-semibold text-dark-blue mb-1">Paystack</div>
-                      <div className="text-sm text-gray-600">
-                        Pay with card, bank transfer, or USSD
-                      </div>
+                      <div className="text-sm text-gray-600">Pay with card, bank transfer, or USSD</div>
                     </div>
                     <Lock className="w-5 h-5 text-gray-400" />
                   </label>
 
-                  <label 
+                  <label
                     className={`flex items-center p-5 border-2 rounded-xl cursor-pointer transition-all ${
-                      paymentMethod === 'flutterwave' 
-                        ? 'border-baby-blue-600 bg-baby-blue-50' 
+                      paymentMethod === 'flutterwave'
+                        ? 'border-baby-blue-600 bg-baby-blue-50'
                         : 'border-gray-200 hover:border-baby-blue-300 hover:bg-gray-50'
                     }`}
                   >
@@ -402,17 +406,15 @@ export default function Checkout() {
                     />
                     <div className="flex-1">
                       <div className="font-semibold text-dark-blue mb-1">Flutterwave</div>
-                      <div className="text-sm text-gray-600">
-                        Secure payment gateway
-                      </div>
+                      <div className="text-sm text-gray-600">Secure payment gateway</div>
                     </div>
                     <Lock className="w-5 h-5 text-gray-400" />
                   </label>
 
-                  <label 
+                  <label
                     className={`flex items-center p-5 border-2 rounded-xl cursor-pointer transition-all ${
-                      paymentMethod === 'bank-transfer' 
-                        ? 'border-baby-blue-600 bg-baby-blue-50' 
+                      paymentMethod === 'bank-transfer'
+                        ? 'border-baby-blue-600 bg-baby-blue-50'
                         : 'border-gray-200 hover:border-baby-blue-300 hover:bg-gray-50'
                     }`}
                   >
@@ -426,9 +428,7 @@ export default function Checkout() {
                     />
                     <div className="flex-1">
                       <div className="font-semibold text-dark-blue mb-1">Bank Transfer</div>
-                      <div className="text-sm text-gray-600">
-                        Manual confirmation required
-                      </div>
+                      <div className="text-sm text-gray-600">Manual confirmation required</div>
                     </div>
                     <Lock className="w-5 h-5 text-gray-400" />
                   </label>
@@ -438,9 +438,15 @@ export default function Checkout() {
                   <div className="bg-baby-blue-50 border border-baby-blue-200 p-6 rounded-xl mb-8">
                     <p className="font-semibold text-dark-blue mb-3">Bank Transfer Details:</p>
                     <div className="space-y-2 text-sm text-gray-700">
-                      <p><span className="font-medium">Account Name:</span> Baby Blue Hair</p>
-                      <p><span className="font-medium">Account Number:</span> 1234567890</p>
-                      <p><span className="font-medium">Bank:</span> Access Bank</p>
+                      <p>
+                        <span className="font-medium">Account Name:</span> Baby Blue Hair
+                      </p>
+                      <p>
+                        <span className="font-medium">Account Number:</span> 1234567890
+                      </p>
+                      <p>
+                        <span className="font-medium">Bank:</span> Access Bank
+                      </p>
                       <p className="mt-3 text-xs text-gray-600">
                         Please include your order reference in the transfer description.
                       </p>
@@ -456,8 +462,8 @@ export default function Checkout() {
                     <ArrowLeft className="w-5 h-5" />
                     Back
                   </button>
-                  <button 
-                    onClick={handleNext} 
+                  <button
+                    onClick={handleNext}
                     className="btn-primary flex-1 flex items-center justify-center gap-2 py-4"
                   >
                     Review Order
@@ -489,9 +495,13 @@ export default function Checkout() {
                     Delivery Address
                   </h3>
                   <div className="text-gray-700 space-y-1">
-                    <p className="font-medium">{formData.firstName} {formData.lastName}</p>
+                    <p className="font-medium">
+                      {formData.firstName} {formData.lastName}
+                    </p>
                     <p>{formData.address}</p>
-                    <p>{formData.city}, {formData.state} {formData.zipCode}</p>
+                    <p>
+                      {formData.city}, {formData.state} {formData.zipCode}
+                    </p>
                     <p className="flex items-center mt-2">
                       <Phone className="w-4 h-4 mr-2" />
                       {formData.phone}
@@ -503,7 +513,10 @@ export default function Checkout() {
                   <h3 className="font-semibold text-dark-blue mb-4">Order Items</h3>
                   <div className="space-y-4">
                     {items.map((item) => (
-                      <div key={item.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div
+                        key={item.id}
+                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                      >
                         <div className="flex items-center space-x-4">
                           <StockImage
                             width={80}
@@ -514,13 +527,11 @@ export default function Checkout() {
                           />
                           <div>
                             <p className="font-semibold text-dark-blue">{item.name}</p>
-                            <p className="text-sm text-gray-600">
-                              Quantity: {item.quantity}
-                            </p>
+                            <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
                           </div>
                         </div>
                         <p className="font-bold text-dark-blue text-lg">
-                          ₦{(item.price * item.quantity).toLocaleString()}
+                          â‚¦{(item.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
                     ))}
@@ -547,8 +558,8 @@ export default function Checkout() {
                     <ArrowLeft className="w-5 h-5" />
                     Back
                   </button>
-                  <button 
-                    onClick={handlePayment} 
+                  <button
+                    onClick={handlePayment}
                     disabled={isProcessing}
                     className="btn-primary flex-1 flex items-center justify-center gap-2 py-4 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
@@ -577,17 +588,15 @@ export default function Checkout() {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-gray-700">
                   <span>Subtotal</span>
-                  <span className="font-semibold">₦{subtotal.toLocaleString()}</span>
+                  <span className="font-semibold">â‚¦{subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-gray-700">
                   <span>Shipping</span>
-                  <span className="font-semibold">₦{shipping.toLocaleString()}</span>
+                  <span className="font-semibold">â‚¦{shipping.toLocaleString()}</span>
                 </div>
                 <div className="border-t border-gray-200 pt-4 flex justify-between">
                   <span className="font-bold text-xl text-dark-blue">Total</span>
-                  <span className="font-bold text-xl text-dark-blue">
-                    ₦{total.toLocaleString()}
-                  </span>
+                  <span className="font-bold text-xl text-dark-blue">â‚¦{total.toLocaleString()}</span>
                 </div>
               </div>
 
