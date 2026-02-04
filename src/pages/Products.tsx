@@ -1,5 +1,7 @@
-import { useState, useMemo } from 'react'
+﻿import { useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
 import ProductCard from '../components/ProductCard'
+import { fadeUpItem, staggerContainer } from '../utils/motion'
 
 // Mock products data
 const allProducts = [
@@ -398,7 +400,6 @@ export default function Products() {
   const sortedProducts = useMemo(() => {
     const products = [...allProducts]
 
-    // Sort
     switch (sortBy) {
       case 'price-low':
         products.sort((a, b) => a.price - b.price)
@@ -407,10 +408,8 @@ export default function Products() {
         products.sort((a, b) => b.price - a.price)
         break
       case 'newest':
-        // Already sorted by id (newest first)
         break
       case 'popular':
-        // Sort by reviews (most popular first)
         products.sort((a, b) => (b.reviews || 0) - (a.reviews || 0))
         break
     }
@@ -422,20 +421,14 @@ export default function Products() {
     <div className="min-h-screen bg-white py-12 px-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-dark-blue mb-4">
-            Our Products
-          </h1>
-          <p className="text-gray-600 text-lg">
-            Discover premium luxury hair products
-          </p>
-        </div>
+        <motion.div variants={fadeUpItem} initial="hidden" animate="show" className="mb-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-dark-blue mb-4">Our Products</h1>
+          <p className="text-gray-600 text-lg">Discover premium luxury hair products</p>
+        </motion.div>
 
         {/* Sort and Product Count */}
-        <div className="flex items-center justify-between mb-8">
-          <span className="text-sm text-gray-600">
-            {sortedProducts.length} products
-          </span>
+        <motion.div variants={fadeUpItem} initial="hidden" animate="show" className="flex items-center justify-between mb-8">
+          <span className="text-sm text-gray-600">{sortedProducts.length} products</span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as SortOption)}
@@ -446,14 +439,26 @@ export default function Products() {
             <option value="price-high">Price: High to Low</option>
             <option value="popular">Popular</option>
           </select>
-        </div>
+        </motion.div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+        >
           {sortedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <motion.div
+              key={product.id}
+              variants={fadeUpItem}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ProductCard product={product} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </div>
   )
