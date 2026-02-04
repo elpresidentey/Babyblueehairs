@@ -75,8 +75,8 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-white">
         <StockImage
-          width={1920}
-          height={1080}
+          width={800}
+          height={600}
           keyword="salon,hair"
           alt="Hair salon"
           className="absolute inset-0 w-full h-full object-cover opacity-[0.04]"
@@ -90,33 +90,22 @@ export default function Home() {
           >
             ✨ Drag the sparkles
           </motion.div>
-          {sparkles.map((s) => (
+          {sparkles.slice(0, 3).map((s) => ( // Reduced from 8 to 3 sparkles
             <motion.div
               key={s.id}
               drag
               dragMomentum={false}
               dragElastic={0.15}
-              dragTransition={{ bounceStiffness: 300, bounceDamping: 30 }}
-              whileHover={{ scale: 1.3 }}
-              whileDrag={{ scale: 1.2, boxShadow: '0 0 32px rgba(59,130,246,0.6)' }}
-              onDragEnd={(e, info) => {
-                const bounds = (e.target as HTMLElement).getBoundingClientRect()
-                const parent = (e.target as HTMLElement).parentElement?.getBoundingClientRect()
-                if (!parent) return
-                const vx = info.offset.x * 0.15
-                const vy = info.offset.y * 0.15
-                const tx = Math.max(0, Math.min(parent.width - bounds.width, s.left + vx))
-                const ty = Math.max(0, Math.min(parent.height - bounds.height, s.top + vy))
-                ;(e.target as HTMLElement).style.transform = `translate(${tx - s.left}%, ${ty - s.top}%)`
-              }}
+              whileHover={{ scale: 1.2 }}
+              whileDrag={{ scale: 1.1 }}
               animate={{
                 x: 0,
                 y: 0,
-                scale: [1, 1.15, 1],
+                scale: [1, 1.1, 1],
               }}
               transition={{
-                x: { type: 'spring', stiffness: 60, damping: 14, delay: 2 },
-                y: { type: 'spring', stiffness: 60, damping: 14, delay: 2 },
+                x: { type: 'spring', stiffness: 100, damping: 15, delay: 0.5 },
+                y: { type: 'spring', stiffness: 100, damping: 15, delay: 0.5 },
                 scale: { duration: s.duration, repeat: Infinity, ease: 'easeInOut' },
               }}
               className="absolute rounded-full bg-gradient-to-br from-white to-baby-blue-100 cursor-grab active:cursor-grabbing"
@@ -271,33 +260,35 @@ export default function Home() {
       </section>
 
       {/* Featured Collections */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-serif font-bold text-dark-blue mb-4">
-              Featured Collections
-            </h2>
-            <p className="text-gray-600 text-lg">
-              Discover our most popular luxury hair products
-            </p>
-          </div>
+      <section className="py-20 bg-ivory">
+        <div className="max-w-7xl mx-auto px-4">
           <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-80px' }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-16"
           >
-            {featuredProducts.map((product) => (
-              <motion.div key={product.id} variants={fadeUpItem}>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-charcoal mb-4">
+              Featured Products
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Discover our premium collection of luxury hair products
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {featuredProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
                 <ProductCard product={product} />
               </motion.div>
             ))}
-          </motion.div>
-          <div className="text-center mt-12">
-            <Link to="/products" className="btn-secondary">
-              View All Products
-            </Link>
           </div>
         </div>
       </section>
