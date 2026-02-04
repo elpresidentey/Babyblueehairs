@@ -531,7 +531,7 @@ export default function Checkout() {
                           </div>
                         </div>
                         <p className="font-bold text-dark-blue text-lg">
-                          â‚¦{(item.price * item.quantity).toLocaleString()}
+                          ₦{(item.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
                     ))}
@@ -588,15 +588,15 @@ export default function Checkout() {
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-gray-700">
                   <span>Subtotal</span>
-                  <span className="font-semibold">â‚¦{subtotal.toLocaleString()}</span>
+                  <span className="font-semibold">₦{subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-gray-700">
                   <span>Shipping</span>
-                  <span className="font-semibold">â‚¦{shipping.toLocaleString()}</span>
+                  <span className="font-semibold">₦{shipping.toLocaleString()}</span>
                 </div>
                 <div className="border-t border-gray-200 pt-4 flex justify-between">
                   <span className="font-bold text-xl text-dark-blue">Total</span>
-                  <span className="font-bold text-xl text-dark-blue">â‚¦{total.toLocaleString()}</span>
+                  <span className="font-bold text-xl text-dark-blue">₦{total.toLocaleString()}</span>
                 </div>
               </div>
 

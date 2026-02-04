@@ -52,7 +52,7 @@ export default function Cart() {
   const total = subtotal + shipping
 
   return (
-    <div className="min-h-screen bg-ivory py-12 px-4">
+    <div id="cart-top" className="min-h-screen bg-ivory py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-4xl font-serif font-bold text-charcoal mb-8">
           Shopping Cart
@@ -201,9 +201,17 @@ export default function Cart() {
                 </div>
               </div>
 
-              <Link to="/checkout" className="btn-primary w-full block text-center mb-4">
+              <button
+                onClick={() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                  setTimeout(() => {
+                    window.location.href = '/checkout'
+                  }, 300)
+                }}
+                className="btn-primary w-full block text-center mb-4"
+              >
                 Proceed to Checkout
-              </Link>
+              </button>
               <Link
                 to="/products"
                 className="btn-secondary w-full block text-center"
