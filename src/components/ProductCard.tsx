@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ShoppingBag, Check, Star, Heart } from 'lucide-react'
 import { useState } from 'react'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import StockImage from './StockImage'
 
 interface Product {
@@ -26,11 +27,13 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart()
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
   const [added, setAdded] = useState(false)
-  const [isWishlisted, setIsWishlisted] = useState(false)
   const [selectedColor, setSelectedColor] = useState<string | null>(
     product.colors?.[0] || null
   )
+  
+  const isWishlisted = isInWishlist(product.id)
 
   const rating = product.rating || 4.5
   const reviews = product.reviews || Math.floor(Math.random() * 200) + 10
@@ -68,7 +71,11 @@ export default function ProductCard({ product }: ProductCardProps) {
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    setIsWishlisted(!isWishlisted)
+    if (isWishlisted) {
+      removeFromWishlist(product.id)
+    } else {
+      addToWishlist(product)
+    }
   }
 
   const renderStars = () => {

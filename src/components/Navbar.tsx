@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { easeLuxury } from '../utils/motion'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import { useAuth } from '../context/AuthContext'
 
 const menuVariants = {
@@ -19,8 +20,10 @@ const itemVariants = {
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { getItemCount } = useCart()
+  const { getWishlistCount } = useWishlist()
   const { isAuthenticated, user, logout } = useAuth()
   const cartCount = getItemCount()
+  const wishlistCount = getWishlistCount()
 
   return (
     <nav className="bg-white/95 backdrop-blur-md shadow-sm sticky top-0 z-50">
@@ -83,10 +86,15 @@ export default function Navbar() {
 
             <motion.div whileHover={{ y: -1 }} whileTap={{ scale: 0.95 }}>
               <Link
-                to="/dashboard?tab=wishlist"
-                className="text-charcoal hover:text-baby-blue-600 transition-colors"
+                to="/wishlist"
+                className="text-charcoal hover:text-baby-blue-600 transition-colors relative"
               >
                 <Heart className="w-5 h-5" />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
               </Link>
             </motion.div>
 
@@ -143,9 +151,10 @@ export default function Navbar() {
                 }}
                 className="py-4"
               >
-                {[
+                {[ 
                   { to: '/', label: 'Home' },
                   { to: '/products', label: 'Shop' },
+                  { to: '/wishlist', label: 'Wishlist' },
                   { to: '/contact', label: 'Contact' },
                 ].map((item) => (
                   <motion.div key={item.to} variants={itemVariants}>
