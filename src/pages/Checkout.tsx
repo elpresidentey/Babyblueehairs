@@ -124,8 +124,10 @@ export default function Checkout() {
 
   const handleTestPayment = async () => {
     // Quick test without validation
+    console.log('Test payment started')
     setIsProcessing(true)
     await new Promise((resolve) => setTimeout(resolve, 1000))
+    console.log('Clearing cart and navigating to success')
     clearCart()
     navigate('/checkout/success', {
       state: { orderId: `BB-TEST-${Date.now()}` },

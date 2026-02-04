@@ -5,6 +5,9 @@ import { CheckCircle, Package, Mail, Home, ShoppingBag } from 'lucide-react'
 export default function CheckoutSuccess() {
   const location = useLocation()
   const orderId = location.state?.orderId || 'BB-000000'
+  
+  console.log('CheckoutSuccess - Order ID:', orderId)
+  console.log('CheckoutSuccess - Location state:', location.state)
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center py-12 px-4">
