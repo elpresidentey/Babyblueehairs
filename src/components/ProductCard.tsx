@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ShoppingBag, Check, Star, Heart } from 'lucide-react'
 import { useState } from 'react'
@@ -28,6 +28,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart()
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
+  const navigate = useNavigate()
   const [added, setAdded] = useState(false)
   const [selectedColor, setSelectedColor] = useState<string | null>(
     product.colors?.[0] || null
@@ -66,6 +67,14 @@ export default function ProductCard({ product }: ProductCardProps) {
     })
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
+    
+    // Navigate to cart and scroll to top
+    setTimeout(() => {
+      navigate('/cart')
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }, 100)
+    }, 500)
   }
 
   const handleWishlist = (e: React.MouseEvent) => {
