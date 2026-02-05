@@ -15,12 +15,11 @@ export default function StockImage({
   alt = keyword,
   className = '',
 }: StockImageProps) {
-  // Premium UX: keep images stable per mount (avoid Date.now() per render -> constant refetch).
-  // Force clear female faces (and hair) across the UI.
-  const keywordToUse = 'woman,face,hair'
+  // Use a more reliable placeholder image service
   const cacheBuster = useRef(Date.now()).current
-
-  const src = `https://loremflickr.com/${width}/${height}/${keywordToUse}?lock=${cacheBuster}`
+  
+  // Using picsum.photos which is more reliable than LoremFlickr
+  const src = `https://picsum.photos/${width}/${height}?random=${cacheBuster}`
 
   return (
     <img
@@ -30,9 +29,13 @@ export default function StockImage({
       loading="lazy"
       onError={(e) => {
         const target = e.target as HTMLImageElement
-        const fallbackSrc = `https://loremflickr.com/${width}/${height}/woman,face?lock=${cacheBuster}`
-        if (target.src !== fallbackSrc) {
-          target.src = fallbackSrc
+        // Fallback to a simple gradient placeholder
+        if (target.src.includes('picsum.photos')) {
+          target.style.background = `linear-gradient(135deg, #667eea 0%, #764ba2 100%)`
+          target.style.display = 'block'
+          target.style.width = `${width}px`
+          target.style.height = `${height}px`
+          target.alt = alt
         }
       }}
     />
