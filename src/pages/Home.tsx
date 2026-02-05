@@ -3,7 +3,6 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
 import { useMemo } from 'react'
 import ProductCard from '../components/ProductCard'
-import StockImage from '../components/StockImage'
 
 // Mock featured products
 const featuredProducts = [
@@ -73,12 +72,11 @@ export default function Home() {
     <div className="w-full">
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-white">
-        <StockImage
-          width={800}
-          height={600}
-          keyword="salon,hair"
-          alt="Hair salon"
+        <div 
           className="absolute inset-0 w-full h-full object-cover opacity-[0.04]"
+          style={{
+            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+          }}
         />
 
         <div className="absolute inset-0" aria-hidden="true">
@@ -259,12 +257,11 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               className="relative h-96 rounded-xl overflow-hidden shadow-2xl"
             >
-              <StockImage
-                width={800}
-                height={384}
-                keyword="woman,hair"
-                alt="Brand story"
+              <div 
                 className="w-full h-full object-cover"
+                style={{
+                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
+                }}
               />
             </motion.div>
           </div>
