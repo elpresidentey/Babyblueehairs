@@ -4,7 +4,6 @@ import { ArrowRight, Sparkles } from 'lucide-react'
 import { useMemo } from 'react'
 import ProductCard from '../components/ProductCard'
 import StockImage from '../components/StockImage'
-import { easeLuxury, fadeUpItem, staggerContainer } from '../utils/motion'
 
 // Mock featured products
 const featuredProducts = [
@@ -122,13 +121,15 @@ export default function Home() {
         </div>
 
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          animate="show"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
           className="relative z-10 text-center px-4 max-w-4xl mx-auto"
         >
           <motion.div
-            variants={fadeUpItem}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             className="inline-flex items-center justify-center gap-2 rounded-full border border-dark-blue/12 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-dark-blue shadow-sm transition-all hover:border-dark-blue/20 hover:shadow-md"
           >
             <Sparkles className="h-4 w-4 text-baby-blue-600" />
@@ -136,7 +137,9 @@ export default function Home() {
           </motion.div>
 
           <motion.h1
-            variants={fadeUpItem}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             className="text-5xl md:text-7xl font-serif font-bold text-dark-blue mb-6 mt-6"
           >
             Luxury Hair for the
@@ -145,20 +148,24 @@ export default function Home() {
           </motion.h1>
 
           <motion.p
-            variants={fadeUpItem}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="text-xl md:text-2xl text-gray-600 mb-8 font-light"
           >
             Premium hair products crafted with elegance, authenticity, and lasting quality
           </motion.p>
 
           <motion.div
-            variants={fadeUpItem}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <motion.div
               whileHover={{ y: -3, scale: 1.03, boxShadow: '0 8px 20px rgba(10,22,40,0.12)' }}
               whileTap={{ scale: 0.97 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              transition={{ duration: 0.2 }}
             >
               <Link to="/products" className="btn-primary inline-flex items-center justify-center">
                 Shop Now
@@ -168,7 +175,7 @@ export default function Home() {
             <motion.div
               whileHover={{ y: -3, scale: 1.03, boxShadow: '0 8px 20px rgba(10,22,40,0.08)' }}
               whileTap={{ scale: 0.97 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+              transition={{ duration: 0.2 }}
             >
               <Link to="/products" className="btn-secondary inline-flex items-center justify-center">
                 Explore Collections
@@ -177,23 +184,28 @@ export default function Home() {
           </motion.div>
 
           <motion.div
-            variants={fadeUpItem}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
             className="mt-10 flex items-center justify-center gap-6 text-sm text-dark-blue/70"
           >
             <motion.span
-              whileHover={{ scale: 1.08, y: -1 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
               className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
             >
               100% Human Hair
             </motion.span>
             <motion.span
-              whileHover={{ scale: 1.08, y: -1 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
               className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
             >
               Fast Shipping
             </motion.span>
             <motion.span
-              whileHover={{ scale: 1.08, y: -1 }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
               className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
             >
               Luxury Finish
@@ -220,10 +232,10 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -24, filter: 'blur(6px)' }}
-              whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: easeLuxury }}
+              transition={{ duration: 0.6 }}
             >
               <h2 className="text-4xl font-serif font-bold text-dark-blue mb-6">
                 Our Story
@@ -241,10 +253,10 @@ export default function Home() {
               </p>
             </motion.div>
             <motion.div
-              initial={{ opacity: 0, x: 24, filter: 'blur(6px)' }}
-              whileInView={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.65, ease: easeLuxury }}
+              transition={{ duration: 0.6 }}
               className="relative h-96 rounded-xl overflow-hidden shadow-2xl"
             >
               <StockImage
@@ -303,17 +315,18 @@ export default function Home() {
             <p className="text-gray-600">Trusted by thousands of satisfied customers</p>
           </div>
           <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-80px' }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
             className="grid md:grid-cols-3 gap-8"
           >
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
-                variants={fadeUpItem}
-                transition={{ duration: 0.45, ease: easeLuxury, delay: index * 0.04 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="card-luxury p-6 relative group"
               >
                 <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-baby-blue-100/40 via-white/10 to-transparent" />
@@ -336,7 +349,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, ease: easeLuxury }}
+          transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto text-center px-6 sm:px-10 py-16 rounded-3xl border border-dark-blue/8 bg-gradient-to-br from-white via-baby-blue-50/30 to-white shadow-xl"
         >
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-dark-blue mb-6">
@@ -346,9 +359,9 @@ export default function Home() {
             Join thousands of women who trust Baby Blue for their luxury hair needs
           </p>
           <motion.div
-            whileHover={{ y: -4, scale: 1.04, boxShadow: '0 12px 28px rgba(10,22,40,0.14)' }}
-            whileTap={{ scale: 0.96 }}
-            transition={{ type: 'spring', stiffness: 380, damping: 22 }}
+            whileHover={{ y: -4, scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2 }}
           >
             <Link to="/products" className="btn-primary inline-flex items-center">
               Start Shopping
