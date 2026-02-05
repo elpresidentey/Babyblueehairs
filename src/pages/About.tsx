@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
 import { Heart, Award, Globe, Sparkles } from 'lucide-react'
 
@@ -180,10 +181,11 @@ export default function About() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => window.location.href = '/products'}
                 className="bg-white text-dark-blue px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors"
               >
-                Shop Our Collection
+                <Link to="/products" className="text-dark-blue hover:text-dark-blue">
+                  Shop Our Collection
+                </Link>
               </motion.button>
             </motion.div>
           </div>
