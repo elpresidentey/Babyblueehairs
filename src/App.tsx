@@ -14,6 +14,7 @@ import Wishlist from './pages/Wishlist'
 import Contact from './pages/Contact'
 import About from './pages/About'
 import AdminDashboard from './pages/AdminDashboard'
+import AppToaster from './components/AppToaster'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 
@@ -39,6 +40,7 @@ function App() {
             <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </Layout>
+        <AppToaster />
       </CartProvider>
     </AuthProvider>
   )

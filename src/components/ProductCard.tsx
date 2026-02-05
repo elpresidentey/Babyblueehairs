@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { useCart } from '../context/CartContext'
 import { useWishlist } from '../context/WishlistContext'
 import StockImage from './StockImage'
+import { crudToasts } from '../utils/toast'
 
 interface Product {
   id: string
@@ -66,6 +67,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       image: product.image,
       imageKeyword: product.imageKeyword,
     })
+    crudToasts.addToCart(product.name)
     setAdded(true)
     setTimeout(() => setAdded(false), 2000)
     
@@ -78,8 +80,10 @@ export default function ProductCard({ product }: ProductCardProps) {
     e.stopPropagation()
     if (isWishlisted) {
       removeFromWishlist(product.id)
+      crudToasts.wishlistRemoved(product.name)
     } else {
       addToWishlist(product)
+      crudToasts.wishlistAdded(product.name)
     }
   }
 

@@ -17,6 +17,7 @@ import {
 import { useCRUDStore, type Product, type Order, type Customer } from '../store/crudStore'
 import SEO from '../components/SEO'
 import ProductForm from '../components/ProductForm'
+import { crudToasts } from '../utils/toast'
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'products' | 'orders' | 'customers' | 'analytics'>('products')
@@ -55,9 +56,11 @@ export default function AdminDashboard() {
     if (editingItem && 'category' in editingItem) {
       // Update existing product
       updateProduct(editingItem.id, productData)
+      crudToasts.productUpdated(productData.name)
     } else {
       // Create new product
       addProduct(productData)
+      crudToasts.productCreated(productData.name)
     }
     setEditingItem(null)
   }
@@ -69,6 +72,13 @@ export default function AdminDashboard() {
   const handleCreateProduct = () => {
     setEditingItem(null)
     setIsCreateModalOpen(true)
+  }
+
+  const handleDeleteProduct = (productId: string, productName: string) => {
+    if (window.confirm(`Are you sure you want to delete "${productName}"?`)) {
+      deleteProduct(productId)
+      crudToasts.productDeleted(productName)
+    }
   }
 
   const filteredCustomers = customers.filter(customer =>
@@ -187,7 +197,7 @@ export default function AdminDashboard() {
                   <ProductsTable 
                     products={filteredProducts} 
                     onEdit={handleEditProduct}
-                    onDelete={deleteProduct}
+                    onDelete={handleDeleteProduct}
                   />
                 )}
                 {activeTab === 'orders' && (
@@ -278,7 +288,7 @@ function ProductsTable({ products, onEdit, onDelete }: any) {
                   <Edit className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => onDelete(product.id)}
+                  onClick={() => onDelete(product.id, product.name)}
                   className="p-1 text-red-600 hover:bg-red-50 rounded"
                 >
                   <Trash2 className="w-4 h-4" />
