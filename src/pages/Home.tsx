@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Sparkles } from 'lucide-react'
-import { useMemo } from 'react'
+import { ArrowRight, Star } from 'lucide-react'
 import ProductCard from '../components/ProductCard'
 
 // Mock featured products
@@ -51,23 +50,6 @@ const testimonials = [
 ]
 
 export default function Home() {
-  const sparkles = useMemo(() => {
-    const seeded = (n: number) => {
-      const x = (n * 9301 + 49297) % 233280
-      return x / 233280
-    }
-
-    return Array.from({ length: 18 }).map((_, i) => {
-      const left = Math.round(seeded(i + 1) * 90 + 5)
-      const top = Math.round(seeded(i + 11) * 70 + 10)
-      const delay = seeded(i + 21) * 2.2
-      const size = Math.round(seeded(i + 31) * 10 + 12)
-      const duration = 2.2 + seeded(i + 41) * 2.4
-      const opacity = 0.4 + seeded(i + 51) * 0.3
-      return { id: i, left, top, delay, size, duration, opacity }
-    })
-  }, [])
-
   return (
     <div className="w-full">
       {/* Hero Section */}
@@ -85,37 +67,8 @@ export default function Home() {
             animate={{ opacity: [0.4, 0.7, 0.4] }}
             transition={{ duration: 3, repeat: Infinity }}
           >
-            ✨ Drag the sparkles
+            ✨ Premium Quality
           </motion.div>
-          {sparkles.slice(0, 3).map((s) => ( // Reduced from 8 to 3 sparkles
-            <motion.div
-              key={s.id}
-              drag
-              dragMomentum={false}
-              dragElastic={0.15}
-              whileHover={{ scale: 1.2 }}
-              whileDrag={{ scale: 1.1 }}
-              animate={{
-                x: 0,
-                y: 0,
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                x: { type: 'spring', stiffness: 100, damping: 15, delay: 0.5 },
-                y: { type: 'spring', stiffness: 100, damping: 15, delay: 0.5 },
-                scale: { duration: s.duration, repeat: Infinity, ease: 'easeInOut' },
-              }}
-              className="absolute rounded-full bg-gradient-to-br from-white to-baby-blue-100 cursor-grab active:cursor-grabbing"
-              style={{
-                left: `${s.left}%`,
-                top: `${s.top}%`,
-                width: s.size,
-                height: s.size,
-                opacity: s.opacity,
-                boxShadow: '0 0 28px rgba(255,255,255,0.6), 0 0 44px rgba(59,130,246,0.2)',
-              }}
-            />
-          ))}
         </div>
 
         <motion.div
@@ -130,7 +83,6 @@ export default function Home() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="inline-flex items-center justify-center gap-2 rounded-full border border-dark-blue/12 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-dark-blue shadow-sm transition-all hover:border-dark-blue/20 hover:shadow-md"
           >
-            <Sparkles className="h-4 w-4 text-baby-blue-600" />
             Premium Nigerian Hair
           </motion.div>
 
@@ -329,7 +281,7 @@ export default function Home() {
                 <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-baby-blue-100/40 via-white/10 to-transparent" />
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Sparkles key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
+                    <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
                   ))}
                 </div>
                 <p className="text-gray-600 mb-4 italic">"{testimonial.text}"</p>
