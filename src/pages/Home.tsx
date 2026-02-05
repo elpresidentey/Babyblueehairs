@@ -97,45 +97,160 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
             <motion.div
-              whileHover={{ y: -3, scale: 1.05 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.1)",
+              }}
               whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
+              className="relative group"
             >
-              <Link to="/products" className="group relative px-8 py-4 bg-baby-blue-600 text-white border border-baby-blue-600 rounded-full hover:bg-baby-blue-700 hover:shadow-xl transition-all duration-300">
-                Shop Now
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <Link 
+                to="/products" 
+                className="relative overflow-hidden rounded-full bg-gradient-to-r from-baby-blue-600 to-purple-600 px-8 py-4 text-white font-semibold"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-purple-600 to-baby-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <span className="relative z-10 flex items-center">
+                  Shop Now
+                  <motion.div
+                    initial={{ x: 0 }}
+                    whileHover={{ x: 3 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </motion.div>
+                </span>
               </Link>
             </motion.div>
+
             <motion.div
-              whileHover={{ y: -3, scale: 1.05 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(0, 0, 0, 0.05)",
+              }}
               whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.2 }}
+              className="relative group"
             >
-              <Link to="/products" className="group relative px-8 py-4 bg-transparent border border-gray-300 text-gray-900 rounded-full hover:bg-gray-100 hover:border-gray-400 transition-all duration-300">
-                Explore Collections
+              <Link 
+                to="/products" 
+                className="relative overflow-hidden rounded-full border-2 border-gray-300 bg-white px-8 py-4 text-gray-900 font-semibold"
+              >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-gray-100 to-gray-200 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                />
+                <span className="relative z-10">Explore Collections</span>
               </Link>
             </motion.div>
           </motion.div>
 
-          {/* Floating Elements */}
+          {/* Premium Floating Elements */}
+          <div className="absolute top-12 left-1/2 -translate-x-1/2">
+            <motion.div
+              animate={{
+                y: [0, -10, 0],
+                transition: { 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }
+              }}
+              className="relative"
+            >
+              <motion.div
+                animate={{
+                  rotate: [0, 180, 360],
+                  transition: { 
+                    duration: 8, 
+                    repeat: Infinity, 
+                    ease: "linear" 
+                }
+                }}
+                className="w-1 h-8 bg-gradient-to-b from-baby-blue-600 to-purple-600 rounded-full"
+              />
+              <motion.div
+                animate={{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.3, 0.8, 0.3],
+                }}
+                transition={{ 
+                  duration: 2, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }}
+                className="absolute -inset-1 bg-gradient-to-b from-baby-blue-400 to-purple-400 rounded-full blur-sm"
+              />
+            </motion.div>
+          </div>
+
+          {/* Side Floating Elements */}
           <motion.div
-            className="absolute top-8 left-1/2 -translate-x-1/2"
+            className="absolute top-1/4 left-10"
             animate={{
-              y: [0, 8, 0],
-              transition: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }
+              y: [0, 20, 0],
+              rotate: [0, 10, -10],
+              transition: { 
+                duration: 3, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }
             }}
           >
-            <motion.div
-              className="absolute left-1/2 top-2 -translate-x-1/2 w-2 h-2 rounded-full bg-baby-blue-600"
-              animate={{
-                y: [0, 10, 0],
-                opacity: [0.3, 0.9, 0.3],
-              }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-            />
+            <div className="w-2 h-2 bg-baby-blue-600 rounded-full opacity-60" />
+          </motion.div>
+
+          <motion.div
+            className="absolute top-1/3 right-10"
+            animate={{
+              y: [0, -15, 0],
+              rotate: [0, -15, 15],
+              transition: { 
+                duration: 2.5, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }
+            }}
+          >
+            <div className="w-3 h-3 bg-purple-600 rounded-full opacity-40" />
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-1/4 left-20"
+            animate={{
+              y: [0, 15, 0],
+              scale: [1, 1.2, 1],
+              transition: { 
+                duration: 2.2, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }
+            }}
+          >
+            <div className="w-2 h-2 bg-baby-blue-400 rounded-full opacity-50" />
+          </motion.div>
+
+          <motion.div
+            className="absolute bottom-1/3 right-20"
+            animate={{
+              y: [0, -20, 0],
+              rotate: [0, 20, -20],
+              transition: { 
+                duration: 2.8, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }
+            }}
+          >
+            <div className="w-4 h-4 bg-purple-400 rounded-full opacity-30" />
           </motion.div>
         </motion.div>
       </section>
