@@ -14,6 +14,7 @@ import Wishlist from './pages/Wishlist'
 import Contact from './pages/Contact'
 import About from './pages/About'
 import AdminDashboard from './pages/AdminDashboard'
+import OrderHistory from './pages/OrderHistory'
 import AppToaster from './components/AppToaster'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
@@ -35,6 +36,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/orders" element={<OrderHistory />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
             <Route path="/admin" element={<AdminDashboard />} />

@@ -53,6 +53,7 @@ export default function Navbar() {
               { to: '/', label: 'Home' },
               { to: '/products', label: 'Shop' },
               { to: '/about', label: 'About' },
+              { to: '/orders', label: 'Orders' },
               { to: '/contact', label: 'Contact' },
             ].map((item) => (
               item.to === '/' ? (
@@ -182,6 +183,7 @@ export default function Navbar() {
                   { to: '/', label: 'Home' },
                   { to: '/products', label: 'Shop' },
                   { to: '/about', label: 'About' },
+                  { to: '/orders', label: 'Orders' },
                   { to: '/wishlist', label: 'Wishlist' },
                   { to: '/contact', label: 'Contact' },
                 ].map((item) => (

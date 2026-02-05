@@ -15,6 +15,8 @@ import {
   ShoppingBag,
 } from 'lucide-react'
 import { useCart } from '../context/CartContext'
+import { useCRUDStore } from '../store/crudStore'
+import { crudToasts } from '../utils/toast'
 import StockImage from '../components/StockImage'
 
 type PaymentMethod = 'paystack' | 'flutterwave' | 'bank-transfer'
@@ -22,6 +24,7 @@ type PaymentMethod = 'paystack' | 'flutterwave' | 'bank-transfer'
 export default function Checkout() {
   const navigate = useNavigate()
   const { items, getTotal, clearCart } = useCart()
+  const { addOrder } = useCRUDStore()
   const [step, setStep] = useState(1)
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('paystack')
 
@@ -113,11 +116,37 @@ export default function Checkout() {
     // Simulate payment processing
     await new Promise((resolve) => setTimeout(resolve, 2000))
 
-    // In a real app, integrate with Paystack/Flutterwave here.
-    // (No console logs in production UX.)
+    // Create order in CRUD store
+    const orderId = `BB-${Date.now()}`
+    const orderData = {
+      customerId: `customer-${Date.now()}`, // In real app, use actual customer ID
+      items: items.map(item => ({
+        productId: item.id,
+        quantity: 1, // In real app, use actual quantity
+        price: item.price,
+        name: item.name,
+        imageKeyword: item.imageKeyword || ''
+      })),
+      totalAmount: getTotal(),
+      status: 'pending' as const,
+      shippingAddress: {
+        street: formData.address,
+        city: formData.city,
+        state: formData.state,
+        postalCode: formData.zipCode,
+        country: 'Nigeria'
+      },
+      paymentMethod: paymentMethod,
+      paymentStatus: 'paid' as const,
+      notes: `Payment via ${paymentMethod}`
+    }
+
+    // Add order to CRUD store
+    addOrder(orderData)
+    crudToasts.orderPlaced(orderId)
+    crudToasts.paymentSuccess()
 
     // Navigate first, then clear cart
-    const orderId = `BB-${Date.now()}`
     window.location.href = `/checkout/success?orderId=${orderId}`
     
     // Clear cart after navigation starts
@@ -133,9 +162,37 @@ export default function Checkout() {
     await new Promise((resolve) => setTimeout(resolve, 1000))
     console.log('Navigating to success page')
     
+    // Create order in CRUD store
+    const testOrderId = `BB-TEST-${Date.now()}`
+    const orderData = {
+      customerId: `customer-${Date.now()}`,
+      items: items.map(item => ({
+        productId: item.id,
+        quantity: 1,
+        price: item.price,
+        name: item.name,
+        imageKeyword: item.imageKeyword || ''
+      })),
+      totalAmount: getTotal(),
+      status: 'pending' as const,
+      shippingAddress: {
+        street: formData.address,
+        city: formData.city,
+        state: formData.state,
+        postalCode: formData.zipCode,
+        country: 'Nigeria'
+      },
+      paymentMethod: 'test' as const,
+      paymentStatus: 'paid' as const,
+      notes: 'Test payment - quick checkout'
+    }
+
+    // Add order to CRUD store
+    addOrder(orderData)
+    crudToasts.orderPlaced(testOrderId)
+    
     // Navigate first, then clear cart
-    const orderId = `BB-TEST-${Date.now()}`
-    window.location.href = `/checkout/success?orderId=${orderId}`
+    window.location.href = `/checkout/success?orderId=${testOrderId}`
     
     // Clear cart after navigation starts
     setTimeout(() => {
