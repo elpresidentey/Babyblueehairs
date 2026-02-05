@@ -13,6 +13,7 @@ import Profile from './pages/Profile'
 import Wishlist from './pages/Wishlist'
 import Contact from './pages/Contact'
 import About from './pages/About'
+import AdminDashboard from './pages/AdminDashboard'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
 
@@ -35,6 +36,7 @@ function App() {
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
+            <Route path="/admin" element={<AdminDashboard />} />
           </Routes>
         </Layout>
       </CartProvider>
