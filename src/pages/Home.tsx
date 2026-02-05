@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Star, ShoppingBag, Menu, X } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { ArrowRight, Star, ShoppingBag } from 'lucide-react'
+import { useEffect } from 'react'
 import ProductCard from '../components/ProductCard'
 
 // Mock featured products
@@ -52,7 +52,6 @@ const testimonials = [
 
 export default function Home() {
   const scrollY = useScroll()
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
   
   // Parallax effect for hero section
   const heroY = useTransform(scrollY.scrollY, (y: number) => y * 0.5)
@@ -64,103 +63,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white overflow-hidden">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center space-x-2"
-            >
-              <Link to="/" className="text-2xl font-serif font-bold text-gray-900 hover:text-baby-blue-600 transition-colors">
-                Baby Blue
-              </Link>
-            </motion.div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-8">
-              {[
-                { to: '/', label: 'Home' },
-                { to: '/products', label: 'Shop' },
-                { to: '/about', label: 'About' },
-                { to: '/orders', label: 'Orders' },
-                { to: '/contact', label: 'Contact' },
-              ].map((item) => (
-                <motion.div
-                  key={item.to}
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Link
-                    to={item.to}
-                    className="text-gray-700 hover:text-baby-blue-600 transition-colors font-medium"
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Right Side Icons */}
-            <div className="flex items-center space-x-4">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 text-gray-600 hover:text-baby-blue-600 transition-colors"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </motion.button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 top-16 left-0 right-0 bg-white shadow-xl z-50"
-          >
-            <div className="max-w-md w-full mx-auto p-4">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Menu</h2>
-                <button
-                  onClick={() => setIsMenuOpen(false)}
-                  className="p-2 text-gray-600 hover:text-gray-900"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-              <div className="space-y-2">
-                {[
-                  { to: '/', label: 'Home' },
-                  { to: '/products', label: 'Shop' },
-                  { to: '/about', label: 'About' },
-                  { to: '/orders', label: 'Orders' },
-                  { to: '/contact', label: 'Contact' },
-                ].map((item) => (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    className="block py-3 px-4 text-gray-700 hover:text-baby-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Hero Section with Parallax */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
         <motion.div
