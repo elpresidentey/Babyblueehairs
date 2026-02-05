@@ -31,7 +31,16 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-            <Link to="/" className="flex items-center space-x-2">
+            <Link 
+              to="/" 
+              className="flex items-center space-x-2"
+              onClick={(e) => {
+                console.log('Logo clicked:', e.detail)
+                if (e.detail === 2) {
+                  console.log('Double click detected on logo')
+                }
+              }}
+            >
               <span className="text-2xl font-serif font-bold text-baby-blue-600">
                 Baby Blue
               </span>
@@ -43,12 +52,19 @@ export default function Navbar() {
             {[
               { to: '/', label: 'Home' },
               { to: '/products', label: 'Shop' },
+              { to: '/about', label: 'About' },
               { to: '/contact', label: 'Contact' },
             ].map((item) => (
               <motion.div key={item.to} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>
                 <Link
                   to={item.to}
                   className="text-charcoal hover:text-baby-blue-600 transition-colors font-medium"
+                  onClick={(e) => {
+                    console.log('Navbar link clicked:', item.to, e.detail)
+                    if (e.detail === 2) {
+                      console.log('Double click detected on:', item.to)
+                    }
+                  }}
                 >
                   {item.label}
                 </Link>
@@ -154,6 +170,7 @@ export default function Navbar() {
                 {[ 
                   { to: '/', label: 'Home' },
                   { to: '/products', label: 'Shop' },
+                  { to: '/about', label: 'About' },
                   { to: '/wishlist', label: 'Wishlist' },
                   { to: '/contact', label: 'Contact' },
                 ].map((item) => (
