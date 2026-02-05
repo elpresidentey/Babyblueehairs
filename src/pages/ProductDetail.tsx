@@ -41,6 +41,41 @@ const productData: Record<string, any> = {
       },
     ],
   },
+  '2': {
+    id: '2',
+    name: 'Body Wave Closure',
+    price: 650000,
+    imageKeyword: 'body wave closure hair',
+    images: ['body wave closure hair', 'body wave closure hair', 'body wave closure hair'],
+    category: 'Closures & Frontals',
+    description:
+      'Premium body wave closure piece made with 100% human hair. Perfect for creating natural-looking hairlines and seamless blends.',
+    specifications: {
+      origin: 'Brazilian',
+      density: '150%',
+      lifespan: '12-18 months',
+      length: '14"',
+      texture: 'Body Wave',
+      weight: '80g',
+    },
+    inStock: true,
+    reviews: [
+      {
+        id: 1,
+        name: 'Funke Akindele',
+        rating: 5,
+        comment: 'Perfect closure! Matches my body wave bundles perfectly.',
+        date: '2024-01-20',
+      },
+      {
+        id: 2,
+        name: 'Bisi Olatunji',
+        rating: 4,
+        comment: 'Great quality and the wave pattern is beautiful.',
+        date: '2024-01-18',
+      },
+    ],
+  },
   '3': {
     id: '3',
     name: 'Curly Lace Front Wig',
