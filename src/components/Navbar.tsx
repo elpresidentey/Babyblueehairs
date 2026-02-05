@@ -30,7 +30,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <div>
             <Link 
               to="/" 
               className="flex items-center space-x-2"
@@ -45,7 +45,7 @@ export default function Navbar() {
                 Baby Blue
               </span>
             </Link>
-          </motion.div>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -55,20 +55,31 @@ export default function Navbar() {
               { to: '/about', label: 'About' },
               { to: '/contact', label: 'Contact' },
             ].map((item) => (
-              <motion.div key={item.to} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>
-                <Link
-                  to={item.to}
-                  className="text-charcoal hover:text-baby-blue-600 transition-colors font-medium"
-                  onClick={(e) => {
-                    console.log('Navbar link clicked:', item.to, e.detail)
-                    if (e.detail === 2) {
-                      console.log('Double click detected on:', item.to)
-                    }
-                  }}
-                >
-                  {item.label}
-                </Link>
-              </motion.div>
+              item.to === '/' ? (
+                <div key={item.to}>
+                  <Link
+                    to={item.to}
+                    className="text-charcoal hover:text-baby-blue-600 transition-colors font-medium"
+                    onClick={(e) => {
+                      console.log('Navbar link clicked:', item.to, e.detail)
+                      if (e.detail === 2) {
+                        console.log('Double click detected on:', item.to)
+                      }
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                </div>
+              ) : (
+                <motion.div key={item.to} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>
+                  <Link
+                    to={item.to}
+                    className="text-charcoal hover:text-baby-blue-600 transition-colors font-medium"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              )
             ))}
           </div>
 
@@ -174,15 +185,27 @@ export default function Navbar() {
                   { to: '/wishlist', label: 'Wishlist' },
                   { to: '/contact', label: 'Contact' },
                 ].map((item) => (
-                  <motion.div key={item.to} variants={itemVariants}>
-                    <Link
-                      to={item.to}
-                      className="block py-2 text-charcoal hover:text-baby-blue-600"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
+                  item.to === '/' ? (
+                    <div key={item.to}>
+                      <Link
+                        to={item.to}
+                        className="block py-2 text-charcoal hover:text-baby-blue-600"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    </div>
+                  ) : (
+                    <motion.div key={item.to} variants={itemVariants}>
+                      <Link
+                        to={item.to}
+                        className="block py-2 text-charcoal hover:text-baby-blue-600"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
+                  )
                 ))}
 
                 {isAuthenticated ? (
