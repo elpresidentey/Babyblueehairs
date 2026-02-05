@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowRight, Star } from 'lucide-react'
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion'
+import { ArrowRight, Star, ShoppingBag, Menu, X } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import ProductCard from '../components/ProductCard'
 
 // Mock featured products
@@ -50,58 +51,142 @@ const testimonials = [
 ]
 
 export default function Home() {
+  const scrollY = useScroll()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  
+  // Parallax effect for hero section
+  const heroY = useTransform(scrollY.scrollY, (y: number) => y * 0.5)
+
+  // Smooth scroll to top when page loads
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
+
   return (
-    <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden bg-white">
-        <div 
-          className="absolute inset-0 w-full h-full object-cover opacity-[0.04]"
-          style={{
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-          }}
-        />
+    <div className="min-h-screen bg-white overflow-hidden">
+      {/* Navigation */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            {/* Logo */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center space-x-2"
+            >
+              <Link to="/" className="text-2xl font-serif font-bold text-gray-900 hover:text-baby-blue-600 transition-colors">
+                Baby Blue
+              </Link>
+            </motion.div>
 
-        <div className="absolute inset-0" aria-hidden="true">
-          <motion.div
-            className="absolute top-4 left-1/2 -translate-x-1/2 text-xs text-dark-blue/40 bg-white/80 backdrop-blur px-3 py-1 rounded-full shadow-sm"
-            animate={{ opacity: [0.4, 0.7, 0.4] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            ✨ Premium Quality
-          </motion.div>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              {[
+                { to: '/', label: 'Home' },
+                { to: '/products', label: 'Shop' },
+                { to: '/about', label: 'About' },
+                { to: '/orders', label: 'Orders' },
+                { to: '/contact', label: 'Contact' },
+              ].map((item) => (
+                <motion.div
+                  key={item.to}
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Link
+                    to={item.to}
+                    className="text-gray-700 hover:text-baby-blue-600 transition-colors font-medium"
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Right Side Icons */}
+            <div className="flex items-center space-x-4">
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-2 text-gray-600 hover:text-baby-blue-600 transition-colors"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </motion.button>
+            </div>
+          </div>
         </div>
+      </nav>
 
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 top-16 left-0 right-0 bg-white shadow-xl z-50"
+          >
+            <div className="max-w-md w-full mx-auto p-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Menu</h2>
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="p-2 text-gray-600 hover:text-gray-900"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <div className="space-y-2">
+                {[
+                  { to: '/', label: 'Home' },
+                  { to: '/products', label: 'Shop' },
+                  { to: '/about', label: 'About' },
+                  { to: '/orders', label: 'Orders' },
+                  { to: '/contact', label: 'Contact' },
+                ].map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="block py-3 px-4 text-gray-700 hover:text-baby-blue-600 hover:bg-gray-50 rounded-lg transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hero Section with Parallax */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-          className="relative z-10 text-center px-4 max-w-4xl mx-auto"
+          style={{ y: heroY }}
+          className="relative z-10 text-center px-4 max-w-7xl mx-auto"
         >
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-dark-blue/12 bg-white px-4 py-2 text-xs font-semibold tracking-wide text-dark-blue shadow-sm transition-all hover:border-dark-blue/20 hover:shadow-md"
-          >
-            Premium Nigerian Hair
-          </motion.div>
-
-          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-5xl md:text-7xl font-serif font-bold text-dark-blue mb-6 mt-6"
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="mb-8"
           >
-            Luxury Hair for the
-            <br />
-            <span className="text-shimmer">Modern Woman</span>
-          </motion.h1>
-
+            <h1 className="text-6xl md:text-7xl font-serif font-bold text-white mb-4">
+              Luxury Hair for the
+              <br />
+              <span className="text-shimmer bg-clip-text-transparent bg-gradient-to-r from-white via-transparent to-white bg-clip-text">
+                Modern Woman
+              </span>
+            </h1>
+          </motion.div>
+          
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-xl md:text-2xl text-gray-600 mb-8 font-light"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
           >
             Premium hair products crafted with elegance, authenticity, and lasting quality
           </motion.p>
@@ -109,128 +194,60 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
             <motion.div
-              whileHover={{ y: -3, scale: 1.03, boxShadow: '0 8px 20px rgba(10,22,40,0.12)' }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ y: -3, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <Link to="/products" className="btn-primary inline-flex items-center justify-center">
+              <Link to="/products" className="group relative px-8 py-4 bg-white text-dark-blue border border-gray-200 rounded-full hover:border-baby-blue-600 hover:shadow-xl transition-all duration-300">
                 Shop Now
-                <ArrowRight className="ml-2 w-5 h-5" />
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
             <motion.div
-              whileHover={{ y: -3, scale: 1.03, boxShadow: '0 8px 20px rgba(10,22,40,0.08)' }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ y: -3, scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <Link to="/products" className="btn-secondary inline-flex items-center justify-center">
+              <Link to="/products" className="group relative px-8 py-4 bg-transparent border border-gray-200 text-white rounded-full hover:bg-white hover:text-dark-blue transition-all duration-300">
                 Explore Collections
               </Link>
             </motion.div>
           </motion.div>
 
+          {/* Floating Elements */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="mt-10 flex items-center justify-center gap-6 text-sm text-dark-blue/70"
+            className="absolute top-8 left-1/2 -translate-x-1/2"
+            animate={{
+              y: [0, 8, 0],
+              transition: { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }
+            }}
           >
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-              className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
-            >
-              100% Human Hair
-            </motion.span>
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-              className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
-            >
-              Fast Shipping
-            </motion.span>
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-              className="rounded-full bg-white px-3 py-1 border border-dark-blue/12 shadow-sm transition-shadow cursor-default"
-            >
-              Luxury Finish
-            </motion.span>
+            <motion.div
+              className="absolute left-1/2 top-2 -translate-x-1/2 w-2 h-2 rounded-full bg-baby-blue-600"
+              animate={{
+                y: [0, 10, 0],
+                opacity: [0.3, 0.9, 0.3],
+              }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            />
           </motion.div>
         </motion.div>
-
-        <motion.div
-          aria-hidden="true"
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 h-10 w-6 rounded-full border border-dark-blue/20 bg-white shadow-sm"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <motion.div
-            className="absolute left-1/2 top-2 -translate-x-1/2 h-2 w-1 rounded-full bg-dark-blue/50"
-            animate={{ y: [0, 10, 0], opacity: [0.3, 0.9, 0.3] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </motion.div>
       </section>
 
-      {/* Brand Story */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-4xl font-serif font-bold text-dark-blue mb-6">
-                Our Story
-              </h2>
-              <p className="text-gray-600 mb-4 leading-relaxed">
-                Baby Blue was born from a passion for excellence and a commitment to
-                providing Nigerian women with the finest quality human hair. We source
-                our hair directly from trusted suppliers, ensuring authenticity and
-                premium craftsmanship in every product.
-              </p>
-              <p className="text-gray-600 leading-relaxed">
-                Our mission is to empower women to express their unique beauty with
-                confidence, offering luxury hair products that blend seamlessly with
-                natural textures while maintaining the highest standards of quality.
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 24 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative h-96 rounded-xl overflow-hidden shadow-2xl"
-            >
-              <div 
-                className="w-full h-full object-cover"
-                style={{
-                  background: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-                }}
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Collections */}
-      <section className="py-20 bg-ivory">
-        <div className="max-w-7xl mx-auto px-4">
+      {/* Featured Products */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-charcoal mb-4">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
               Featured Products
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
@@ -246,6 +263,8 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                whileHover={{ y: -5 }}
+                className="group"
               >
                 <ProductCard product={product} />
               </motion.div>
@@ -257,18 +276,21 @@ export default function Home() {
       {/* Testimonials */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-serif font-bold text-dark-blue mb-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-gray-900 mb-4">
               What Our Customers Say
             </h2>
-            <p className="text-gray-600">Trusted by thousands of satisfied customers</p>
-          </div>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="grid md:grid-cols-3 gap-8"
-          >
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Don't just take our word for it
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
@@ -276,48 +298,51 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="card-luxury p-6 relative group"
+                className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
               >
-                <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-baby-blue-100/40 via-white/10 to-transparent" />
-                <div className="flex mb-4">
+                <div className="flex items-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-400 fill-yellow-400" />
                   ))}
                 </div>
-                <p className="text-gray-600 mb-4 italic">"{testimonial.text}"</p>
-                <p className="font-semibold text-dark-blue">— {testimonial.name}</p>
+                <p className="text-gray-600 mb-2 italic">"{testimonial.text}"</p>
+                <p className="font-semibold text-gray-900">— {testimonial.name}</p>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-white">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto text-center px-6 sm:px-10 py-16 rounded-3xl border border-dark-blue/8 bg-gradient-to-br from-white via-baby-blue-50/30 to-white shadow-xl"
-        >
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-dark-blue mb-6">
-            Ready to Elevate Your Style?
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Join thousands of women who trust Baby Blue for their luxury hair needs
-          </p>
+      <section className="py-20 px-4 bg-gradient-to-r from-baby-blue-600 to-dark-blue">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div
-            whileHover={{ y: -4, scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
           >
-            <Link to="/products" className="btn-primary inline-flex items-center">
-              Start Shopping
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Link>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-6">
+              Ready to Transform Your Look?
+            </h2>
+            <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+              Join thousands of satisfied customers who trust Baby Blue for their hair needs
+            </p>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Link
+                to="/products"
+                className="bg-white text-dark-blue px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-100 transition-colors"
+              >
+                <ShoppingBag className="mr-2 w-5 h-5" />
+                Shop Collection
+              </Link>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </section>
     </div>
   )
