@@ -64,7 +64,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white overflow-hidden">
       {/* Hero Section with Parallax */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-black">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden bg-white">
         <motion.div
           style={{ y: heroY }}
           className="relative z-10 text-center px-4 max-w-7xl mx-auto"
@@ -75,10 +75,10 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-8"
           >
-            <h1 className="text-6xl md:text-7xl font-serif font-bold text-white mb-4">
+            <h1 className="text-6xl md:text-7xl font-serif font-bold text-gray-900 mb-4">
               Luxury Hair for the
               <br />
-              <span className="text-shimmer bg-clip-text-transparent bg-gradient-to-r from-white via-transparent to-white bg-clip-text">
+              <span className="text-shimmer bg-clip-text-transparent bg-gradient-to-r from-baby-blue-600 via-purple-600 to-baby-blue-600 bg-clip-text">
                 Modern Woman
               </span>
             </h1>
@@ -88,7 +88,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto"
+            className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
           >
             Premium hair products crafted with elegance, authenticity, and lasting quality
           </motion.p>
@@ -104,7 +104,7 @@ export default function Home() {
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <Link to="/products" className="group relative px-8 py-4 bg-white text-dark-blue border border-gray-200 rounded-full hover:border-baby-blue-600 hover:shadow-xl transition-all duration-300">
+              <Link to="/products" className="group relative px-8 py-4 bg-baby-blue-600 text-white border border-baby-blue-600 rounded-full hover:bg-baby-blue-700 hover:shadow-xl transition-all duration-300">
                 Shop Now
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -114,7 +114,7 @@ export default function Home() {
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
             >
-              <Link to="/products" className="group relative px-8 py-4 bg-transparent border border-gray-200 text-white rounded-full hover:bg-white hover:text-dark-blue transition-all duration-300">
+              <Link to="/products" className="group relative px-8 py-4 bg-transparent border border-gray-300 text-gray-900 rounded-full hover:bg-gray-100 hover:border-gray-400 transition-all duration-300">
                 Explore Collections
               </Link>
             </motion.div>
