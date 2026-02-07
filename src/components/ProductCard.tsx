@@ -151,17 +151,19 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Enhanced Action Buttons */}
         <div className="absolute top-4 right-4 flex flex-col gap-3">
           <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.15, rotate: [0, 5, -5, 0] }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleWishlist}
-            className={`p-3 rounded-full backdrop-blur-md shadow-lg transition-all duration-200 ${
+            className={`p-3 rounded-full backdrop-blur-md shadow-lg transition-all duration-300 ${
               isWishlisted
-                ? 'bg-red-500 text-white'
-                : 'bg-white/90 text-gray-600 hover:bg-white hover:text-red-500'
+                ? 'bg-gradient-to-r from-red-500 to-pink-600 text-white shadow-red-500/50'
+                : 'bg-gradient-to-r from-white/95 to-gray-50 text-gray-600 hover:from-white hover:to-white hover:text-red-500 shadow-gray-600/30'
             }`}
           >
             <Heart
-              className={`w-5 h-5 flex items-center justify-center ${isWishlisted ? 'fill-current' : ''}`}
+              className={`w-5 h-5 flex items-center justify-center transition-all duration-300 ${
+                isWishlisted ? 'fill-current text-white scale-110' : 'scale-100'
+              }`}
             />
           </motion.button>
 
