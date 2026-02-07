@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useLocation } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import WhatsAppChat from './WhatsAppChat'
 import { pageTransition, pageVariants } from '../utils/motion'
 
 interface LayoutProps {
@@ -29,6 +30,7 @@ export default function Layout({ children }: LayoutProps) {
         </motion.main>
       </AnimatePresence>
       <Footer />
+      <WhatsAppChat />
     </div>
   )
 }

@@ -18,6 +18,7 @@ import { useCart } from '../context/CartContext'
 import { useCRUDStore } from '../store/crudStore'
 import { crudToasts } from '../utils/toast'
 import StockImage from '../components/StockImage'
+import { useAuth } from '../context/AuthContext'
 
 type PaymentMethod = 'paystack' | 'flutterwave' | 'bank-transfer'
 
@@ -25,6 +26,7 @@ export default function Checkout() {
   const navigate = useNavigate()
   const { items, getTotal, clearCart } = useCart()
   const { addOrder } = useCRUDStore()
+  const { user } = useAuth()
   const [step, setStep] = useState(1)
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('paystack')
 
@@ -119,16 +121,16 @@ export default function Checkout() {
     // Create order in CRUD store
     const orderId = `BB-${Date.now()}`
     const orderData = {
-      customerId: `customer-${Date.now()}`, // In real app, use actual customer ID
+      customerId: user?.id || 'guest-user', // Use actual user ID from auth
       items: items.map(item => ({
         productId: item.id,
-        quantity: 1, // In real app, use actual quantity
+        quantity: item.quantity || 1, // Use actual quantity from cart
         price: item.price,
         name: item.name,
         imageKeyword: item.imageKeyword || ''
       })),
       totalAmount: getTotal(),
-      status: 'pending' as const,
+      status: 'processing' as const, // Start with processing status
       shippingAddress: {
         street: formData.address,
         city: formData.city,

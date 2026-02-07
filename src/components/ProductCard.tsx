@@ -116,85 +116,97 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      transition={{ duration: 0.2 }}
-      className="card-luxury group flex flex-col h-full"
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200 h-full flex flex-col"
     >
-      <div className="relative overflow-hidden flex-shrink-0">
+      <div className="relative overflow-hidden">
         <Link to={`/products/${product.id}`}>
           <StockImage
             width={500}
             height={320}
             keyword={product.imageKeyword || product.name.toLowerCase() + ' hair'}
             alt={product.name}
-            className="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-300"
+            className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
           />
         </Link>
-        
-        {/* Badges */}
+
+        {/* Enhanced Badges */}
         <div className="absolute top-4 left-4 flex flex-col gap-2">
           {onSale && (
-            <span className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+            <div className="bg-gradient-to-r from-red-500 to-red-600 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg backdrop-blur-sm">
               SALE
-            </span>
+            </div>
           )}
           {!inStock && (
-            <span className="bg-gray-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+            <div className="bg-gradient-to-r from-gray-600 to-gray-700 text-white px-3 py-1.5 rounded-lg text-xs font-bold shadow-lg backdrop-blur-sm">
               OUT OF STOCK
-            </span>
+            </div>
           )}
         </div>
 
-        <div className="absolute top-4 right-4 flex flex-col gap-2">
-          <button
+        {/* Enhanced Action Buttons */}
+        <div className="absolute top-4 right-4 flex flex-col gap-3">
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={handleWishlist}
-            className={`p-2 rounded-full bg-white/90 backdrop-blur-sm shadow-md transition-all ${
-              isWishlisted ? 'text-red-500' : 'text-gray-600 hover:text-red-500'
+            className={`p-3 rounded-full backdrop-blur-md shadow-lg transition-all duration-200 ${
+              isWishlisted
+                ? 'bg-red-500 text-white'
+                : 'bg-white/90 text-gray-600 hover:bg-white hover:text-red-500'
             }`}
           >
             <Heart
-              className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`}
+              className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`}
             />
-          </button>
-          <span className="bg-baby-blue-600 text-white px-3 py-1.5 rounded-full text-xs font-medium">
+          </motion.button>
+
+          <div className="bg-gradient-to-r from-gray-900 to-gray-800 text-white px-3 py-1.5 rounded-lg text-xs font-medium shadow-lg backdrop-blur-sm">
             {product.category}
-          </span>
+          </div>
         </div>
+
+        {/* Hover Overlay */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
       </div>
 
-      <div className="p-5 flex flex-col flex-grow min-h-[280px]">
-        <Link to={`/products/${product.id}`} className="mb-2">
-          <h3 className="text-base font-semibold text-charcoal hover:text-baby-blue-600 transition-colors leading-tight line-clamp-2 min-h-[2.5rem]">
+      {/* Enhanced Content Section */}
+      <div className="p-6">
+        <Link to={`/products/${product.id}`} className="block">
+          <h3 className="text-lg font-bold text-gray-900 hover:text-gray-700 transition-colors leading-tight line-clamp-2 mb-2 min-h-[3.5rem] group-hover:text-gray-800">
             {product.name}
           </h3>
         </Link>
 
-        {/* Ratings */}
-        <div className="mb-3 flex items-center gap-2">
-          <div className="flex items-center gap-0.5">
+        {/* Enhanced Ratings */}
+        <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-1">
             {renderStars()}
           </div>
-          <span className="text-xs text-gray-600">
-            ({rating.toFixed(1)}) · {reviews}
+          <span className="text-sm text-gray-600 font-medium">
+            {rating.toFixed(1)} ({reviews})
           </span>
         </div>
 
-        {/* Color Variants */}
+        {/* Enhanced Color Variants */}
         {product.colors && product.colors.length > 0 && (
-          <div className="mb-3">
-            <p className="text-xs text-gray-600 mb-1.5">Colors:</p>
-            <div className="flex flex-wrap gap-1.5">
+          <div className="mb-4">
+            <p className="text-sm font-medium text-gray-700 mb-2">Available Colors:</p>
+            <div className="flex flex-wrap gap-2">
               {product.colors.map((color, index) => (
-                <button
+                <motion.button
                   key={index}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
                     setSelectedColor(color)
                   }}
-                  className={`w-7 h-7 rounded-full border-2 transition-all ${
+                  className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
                     selectedColor === color
-                      ? 'border-dark-blue scale-110 shadow-md'
+                      ? 'border-gray-900 scale-110 shadow-lg'
                       : 'border-gray-300 hover:border-gray-400'
                   }`}
                   style={{ backgroundColor: color }}
@@ -205,44 +217,50 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
         )}
 
-        {/* Price */}
-        <div className="mb-4 mt-auto">
+        {/* Enhanced Pricing */}
+        <div className="flex items-center justify-between pt-2 border-t border-gray-100 mb-4">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold text-dark-blue">
-              ₦{displayPrice.toLocaleString()}
-            </span>
-            {originalPrice && originalPrice > displayPrice && (
-              <span className="text-xs text-gray-500 line-through">
+            {onSale && originalPrice && (
+              <span className="text-sm text-gray-500 line-through">
                 ₦{originalPrice.toLocaleString()}
               </span>
             )}
+            <span className="text-xl font-bold text-gray-900">
+              ₦{displayPrice.toLocaleString()}
+            </span>
           </div>
+
+          {onSale && (
+            <span className="bg-red-100 text-red-700 px-2 py-1 rounded-md text-xs font-semibold">
+              {Math.round(((originalPrice! - displayPrice) / originalPrice!) * 100)}% OFF
+            </span>
+          )}
         </div>
 
-        {/* CTA Button - Fixed at bottom */}
-        <button
+        {/* Add to Cart Button - At Bottom */}
+        <motion.button
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
           onClick={handleAddToCart}
           disabled={!inStock}
-          className={`btn-primary w-full flex items-center justify-center gap-2 text-sm py-2.5 mt-auto ${
-            added ? 'bg-green-600 hover:bg-green-700' : ''
-          } ${!inStock ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 ${
+            inStock
+              ? 'bg-gradient-to-r from-gray-900 to-gray-800 text-white hover:from-gray-800 hover:to-gray-700 shadow-lg'
+              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          }`}
         >
           {added ? (
             <>
               <Check className="w-4 h-4" />
-              <span>Added!</span>
-            </>
-          ) : !inStock ? (
-            <>
-              <span>Out of Stock</span>
+              Added to Cart
             </>
           ) : (
             <>
               <ShoppingBag className="w-4 h-4" />
-              <span>Add to Cart</span>
+              {inStock ? 'Add to Cart' : 'Out of Stock'}
             </>
           )}
-        </button>
+        </motion.button>
       </div>
     </motion.div>
   )

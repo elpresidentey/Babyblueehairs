@@ -3,35 +3,28 @@ import { motion } from 'framer-motion'
 import { Trash2, Plus, Minus, ShoppingBag, Eye, Truck, CheckCircle } from 'lucide-react'
 import { useEffect } from 'react'
 import { useCart } from '../context/CartContext'
+import { useAuth } from '../context/AuthContext'
+import { useCRUDStore } from '../store/crudStore'
 import StockImage from '../components/StockImage'
-
-// Mock order history for cart page
-const recentOrders = [
-  {
-    id: 'ORD-2024-001',
-    date: '2024-01-15',
-    status: 'delivered',
-    total: 1500000,
-    items: [
-      { id: '1', name: 'Silky Straight Bundle', price: 850000, quantity: 1 },
-      { id: '2', name: 'Body Wave Closure', price: 650000, quantity: 1 },
-    ],
-  },
-  {
-    id: 'ORD-2024-002',
-    date: '2024-01-28',
-    status: 'shipped',
-    total: 920000,
-    items: [
-      { id: '3', name: 'Curly Lace Front Wig', price: 920000, quantity: 1 },
-    ],
-  },
-]
 
 export default function Cart() {
   const { items, updateQuantity, removeFromCart, getTotal, clearCart } = useCart()
+  const { user } = useAuth()
+  const { getOrdersByCustomer } = useCRUDStore()
   const location = useLocation()
   const navigate = useNavigate()
+
+  // Get real recent orders for the user (last 3 delivered orders)
+  const recentOrders = user ? getOrdersByCustomer(user.id)
+    .filter(order => order.status === 'delivered')
+    .slice(0, 3)
+    .map(order => ({
+      id: order.id,
+      date: order.orderDate,
+      status: order.status,
+      total: order.totalAmount,
+      items: order.items
+    })) : []
 
   useEffect(() => {
     console.log('Cart - Items:', items.length, items)

@@ -8,13 +8,15 @@ import Checkout from './pages/Checkout'
 import CheckoutSuccess from './pages/CheckoutSuccess'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import Wishlist from './pages/Wishlist'
 import Contact from './pages/Contact'
 import About from './pages/About'
-import AdminDashboard from './pages/AdminDashboard'
 import OrderHistory from './pages/OrderHistory'
+import Blog from './pages/Blog'
+import TermsOfService from './pages/TermsOfService'
+import ShippingReturns from './pages/ShippingReturns'
+import PrivacyPolicy from './pages/PrivacyPolicy'
 import AppToaster from './components/AppToaster'
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
@@ -33,13 +35,15 @@ function App() {
             <Route path="/checkout/success" element={<CheckoutSuccess />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/orders" element={<OrderHistory />} />
+            <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
-            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
+            <Route path="/shipping-returns" element={<ShippingReturns />} />
           </Routes>
         </Layout>
         <AppToaster />

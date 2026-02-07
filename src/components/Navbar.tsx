@@ -1,5 +1,5 @@
 ﻿import { Link } from 'react-router-dom'
-import { ShoppingBag, Menu, X, User, Heart, BarChart3 } from 'lucide-react'
+import { ShoppingBag, Menu, X, User, Heart } from 'lucide-react'
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { easeLuxury } from '../utils/motion'
@@ -41,7 +41,7 @@ export default function Navbar() {
                 }
               }}
             >
-              <span className="text-2xl font-serif font-bold text-baby-blue-600">
+              <span className="text-2xl font-serif font-bold text-baby-blue-600 tracking-tight">
                 Baby Blue
               </span>
             </Link>
@@ -52,6 +52,7 @@ export default function Navbar() {
             {[
               { to: '/', label: 'Home' },
               { to: '/products', label: 'Shop' },
+              { to: '/blog', label: 'Blog' },
               { to: '/about', label: 'About' },
               { to: '/orders', label: 'Orders' },
               { to: '/contact', label: 'Contact' },
@@ -86,18 +87,10 @@ export default function Navbar() {
 
           {/* Right Side Icons */}
           <div className="flex items-center space-x-4">
-            {/* Admin Link - Always visible for admin access */}
-            <Link
-              to="/admin"
-              className="hidden md:flex items-center space-x-1 text-gray-600 hover:text-baby-blue-600 transition-colors"
-              title="Admin Dashboard"
-            >
-              <BarChart3 className="w-5 h-5" />
-            </Link>
             {isAuthenticated ? (
               <>
                 <Link
-                  to="/dashboard"
+                  to="/profile"
                   className="hidden md:flex items-center space-x-1 text-charcoal hover:text-baby-blue-600 transition-colors"
                 >
                   <User className="w-5 h-5" />
@@ -190,6 +183,7 @@ export default function Navbar() {
                 {[ 
                   { to: '/', label: 'Home' },
                   { to: '/products', label: 'Shop' },
+                  { to: '/blog', label: 'Blog' },
                   { to: '/about', label: 'About' },
                   { to: '/orders', label: 'Orders' },
                   { to: '/wishlist', label: 'Wishlist' },
@@ -220,24 +214,6 @@ export default function Navbar() {
 
                 {isAuthenticated ? (
                   <>
-                    <motion.div variants={itemVariants}>
-                      <Link
-                        to="/admin"
-                        className="block py-2 text-charcoal hover:text-baby-blue-600"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        Admin Dashboard
-                      </Link>
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <Link
-                        to="/dashboard"
-                        className="block py-2 text-charcoal hover:text-baby-blue-600"
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        Dashboard
-                      </Link>
-                    </motion.div>
                     <motion.div variants={itemVariants}>
                       <Link
                         to="/profile"

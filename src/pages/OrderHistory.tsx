@@ -1,32 +1,31 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import React from 'react'
-import { 
-  Package, 
-  MapPin, 
-  CreditCard, 
-  Truck, 
-  CheckCircle, 
-  Clock, 
+import {
+  Package,
+  MapPin,
+  CreditCard,
+  Truck,
+  CheckCircle,
+  Clock,
   XCircle,
   Eye,
   RefreshCw
 } from 'lucide-react'
 import { useCRUDStore, type Order } from '../store/crudStore'
+import { useAuth } from '../context/AuthContext'
 import SEO from '../components/SEO'
 import { crudToasts } from '../utils/toast'
 
 export default function OrderHistory() {
-  const { orders, updateOrder } = useCRUDStore()
+  const { orders, updateOrder, getOrdersByCustomer } = useCRUDStore()
+  const { user } = useAuth()
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [filterStatus, setFilterStatus] = useState<string>('all')
   const [isUpdating, setIsUpdating] = useState(false)
 
-  // Mock customer ID - in real app, get from auth context
-  const customerId = 'customer-123'
-
-  // Filter orders for this customer
-  const customerOrders = orders.filter(order => order.customerId === customerId)
+  // Get orders for the authenticated user
+  const customerOrders = user ? getOrdersByCustomer(user.id) : []
   
   // Apply status filter
   const filteredOrders = filterStatus === 'all' 
@@ -150,14 +149,14 @@ export default function OrderHistory() {
                   No orders found
                 </h3>
                 <p className="text-gray-600">
-                  {filterStatus === 'all' 
-                    ? "You haven't placed any orders yet" 
+                  {filterStatus === 'all'
+                    ? "You haven't placed any orders yet"
                     : `No orders with status "${filterStatus}"`
                   }
                 </p>
                 <button
                   onClick={() => window.location.href = '/products'}
-                  className="mt-4 px-6 py-2 bg-baby-blue-600 text-white rounded-lg hover:bg-baby-blue-700"
+                  className="mt-4 px-6 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors"
                 >
                   Start Shopping
                 </button>

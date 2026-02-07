@@ -34,7 +34,7 @@ export default function Register() {
 
     try {
       await register(formData.name, formData.email, formData.password)
-      navigate('/dashboard')
+      navigate('/profile')
     } catch (err) {
       setError('Registration failed. Please try again.')
     } finally {

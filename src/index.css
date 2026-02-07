@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,15 +7,332 @@
 
 @layer base {
   * {
-    font-family: 'Cabin', system-ui, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   }
-  
+
   body {
-    background-color: #ffffff; /* white */
-    color: #0a1628; /* dark blue */
-    font-family: 'Cabin', system-ui, sans-serif;
+    background-color: #ffffff;
+    color: #1a1a1a;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* Enhanced Typography Hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+
+  h4 {
+    font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  h5 {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  h6 {
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  p {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    color: #374151;
+  }
+
+  /* Enhanced Font Classes */
+  .font-heading {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .font-body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .font-light {
+    font-weight: 300;
+  }
+
+  .font-normal {
+    font-weight: 400;
+  }
+
+  .font-medium {
+    font-weight: 500;
+  }
+
+  .font-semibold {
+    font-weight: 600;
+  }
+
+  .font-bold {
+    font-weight: 700;
+  }
+
+  .font-extrabold {
+    font-weight: 800;
+  }
+
+  .font-black {
+    font-weight: 900;
+  }
+
+  /* Enhanced Color System */
+  :root {
+    --color-primary: #1a1a1a;
+    --color-primary-dark: #157747;
+    --color-secondary: #6b7280;
+    --color-accent: #3b82f6;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-gray-50: #f9fafb;
+    --color-gray-100: #f3f4f6;
+    --color-gray-200: #e5e7eb;
+    --color-gray-300: #d1d5db;
+    --color-gray-400: #9ca3af;
+    --color-gray-500: #6b7280;
+    --color-gray-600: #4b5563;
+    --color-gray-700: #374151;
+    --color-gray-800: #1f2937;
+    --color-gray-900: #111827;
+    --color-white: #ffffff;
+  }
+
+  /* Enhanced Typography Scale */
+  .text-xs { font-size: 0.75rem; line-height: 1.125rem; letter-spacing: 0.025em; }
+  .text-sm { font-size: 0.875rem; line-height: 1.25rem; letter-spacing: 0.025em; }
+  .text-base { font-size: 1rem; line-height: 1.5rem; letter-spacing: 0.025em; }
+  .text-lg { font-size: 1.125rem; line-height: 1.75rem; letter-spacing: 0.025em; }
+  .text-xl { font-size: 1.25rem; line-height: 1.875rem; letter-spacing: 0.025em; }
+  .text-2xl { font-size: 1.5rem; line-height: 2rem; letter-spacing: 0.025em; }
+  .text-3xl { font-size: 1.875rem; line-height: 2.25rem; letter-spacing: 0.025em; }
+  .text-4xl { font-size: 2.25rem; line-height: 2.5rem; letter-spacing: 0.025em; }
+  .text-5xl { font-size: 3rem; line-height: 3.5rem; letter-spacing: 0.025em; }
+  .text-6xl { font-size: 3.75rem; line-height: 4rem; letter-spacing: 0.025em; }
+  .text-7xl { font-size: 4.5rem; line-height: 4.5rem; letter-spacing: 0.025em; }
+  .text-8xl { font-size: 6rem; line-height: 6rem; letter-spacing: 0.025em; }
+
+  /* Enhanced Font Weights */
+  .font-light { font-weight: 300; }
+  .font-normal { font-weight: 400; }
+  .font-medium { font-weight: 500; }
+  .font-semibold { font-weight: 600; }
+  .font-bold { font-weight: 700; }
+  .font-extrabold { font-weight: 800; }
+
+  /* Enhanced Text Spacing */
+  .space-y-1 { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+  .space-y-2 { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+  .space-y-3 { margin-top: 0.75rem; margin-bottom: 0.75rem; }
+  .space-y-4 { margin-top: 1rem; margin-bottom: 1rem; }
+  .space-y-6 { margin-top: 1.5rem; margin-bottom: 1.5rem; }
+  .space-y-8 { margin-top: 2rem; margin-bottom: 2rem; }
+  .space-y-12 { margin-top: 3rem; margin-bottom: 3rem; }
+  .space-y-16 { margin-top: 4rem; margin-bottom: 4rem; }
+
+  /* Enhanced Button Styles */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--color-white);
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(26, 32, 44, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px -2px rgba(26, 32, 44, 0.15);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px -1px rgba(26, 32, 44, 0.1);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: 0.875rem 1.5rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(26, 32, 44, 0.1);
+  }
+
+  /* Enhanced Card Styles */
+  .card-luxury {
+    background: var(--color-white);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-luxury:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Enhanced Form Styles */
+  .form-input {
+    background: var(--color-white);
+    border: 2px solid var(--color-gray-200);
+    color: var(--color-gray-700);
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 0.875rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px rgba(26, 32, 44, 0.1);
+  }
+
+  /* Enhanced Background Gradients */
+  .bg-gradient-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  }
+
+  .bg-gradient-subtle {
+    background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%);
+  }
+
+  /* Enhanced Text Utilities */
+  .text-primary { color: var(--color-primary); }
+  .text-secondary { color: var(--color-secondary); }
+  .text-muted { color: var(--color-gray-500); }
+  .text-inverse { color: var(--color-white); }
+
+  /* Enhanced Component Styles */
+  .icon-primary {
+    color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    padding: 0.5rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-secondary {
+    color: var(--color-secondary);
+    background: var(--color-gray-100);
+    padding: 0.5rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Enhanced Layout Utilities */
+  .container-centered {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .section-padding {
+    padding: 4rem 1rem;
+  }
+
+  .section-padding-lg {
+    padding: 6rem 1rem;
+  }
+
+  /* Enhanced Animations */
+  .fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .slide-in-left {
+    animation: slideInLeft 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  .slide-in-right {
+    animation: slideInRight 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 }
 
@@ -22,49 +340,10 @@
   .luxury-gradient {
     background: linear-gradient(to bottom right, #f0f9ff, #faf9f6, #e8dcc6);
   }
-  
-  .btn-primary {
-    background-color: #0a1628; /* dark blue */
-    color: #ffffff; /* white */
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.3s;
-  }
-  
-  .btn-primary:hover {
-    background-color: rgba(10, 22, 40, 0.9);
-    transform: scale(1.05);
-  }
-  
-  .btn-primary:active {
-    transform: scale(0.95);
-  }
-  
-  .btn-secondary {
-    background-color: transparent;
-    border: 2px solid #0a1628; /* dark blue */
-    color: #0a1628; /* dark blue */
-    padding: 0.75rem 1.5rem;
-    border-radius: 0.5rem;
-    font-weight: 500;
-    font-size: 0.875rem;
-    transition: all 0.3s;
-  }
-  
-  .btn-secondary:hover {
-    background-color: #0a1628; /* dark blue */
-    color: #ffffff; /* white */
-  }
-  
-  .card-luxury {
-    @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden;
-  }
-  
+
   .text-luxury {
     font-family: 'Cabin', sans-serif;
-    color: #0a1628; /* dark blue */
+    color: #1a1a1a;
   }
 }
 
