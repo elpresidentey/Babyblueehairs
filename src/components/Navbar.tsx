@@ -118,7 +118,7 @@ export default function Navbar() {
                 to="/wishlist"
                 className="text-charcoal hover:text-baby-blue-600 transition-colors relative"
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-5 h-5 flex items-center justify-center" />
                 {wishlistCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {wishlistCount}

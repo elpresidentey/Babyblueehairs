@@ -12,7 +12,7 @@ export default function Wishlist() {
     return (
       <div className="min-h-screen bg-ivory py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <Heart className="w-24 h-24 text-gray-300 mx-auto mb-6" />
+          <Heart className="w-24 h-24 text-gray-300 mx-auto mb-6 flex items-center justify-center" />
           <h2 className="text-3xl font-serif font-bold text-charcoal mb-4">
             Your wishlist is empty
           </h2>
@@ -71,7 +71,7 @@ export default function Wishlist() {
                 className="absolute top-2 right-2 z-10 bg-white rounded-full p-2 shadow-md hover:bg-red-50 hover:text-red-600 transition-colors"
                 aria-label="Remove from wishlist"
               >
-                <Heart className="w-4 h-4 fill-current" />
+                <Heart className="w-4 h-4 fill-current flex items-center justify-center" />
               </button>
             </motion.div>
           ))}

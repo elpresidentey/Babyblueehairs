@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { ShoppingBag, Heart, Star, ChevronLeft, ChevronRight, Check } from 'lucide-react'
+import { ShoppingBag, Star, ChevronLeft, ChevronRight, Check } from 'lucide-react'
 import { useCart } from '../context/CartContext'
-import { useCRUDStore } from '../store/crudStore'
 import StockImage from '../components/StockImage'
 
 // Mock product data (same as Products page)
@@ -125,8 +124,7 @@ export default function ProductDetail() {
         name: product.name,
         price: product.price,
         image: '',
-        imageKeyword: product.imageKeyword || 'hair',
-        quantity: 1
+        imageKeyword: product.imageKeyword || 'hair'
       })
     }
     setAdded(true)
@@ -245,7 +243,7 @@ export default function ProductDetail() {
                   {Object.entries(product.specifications).map(([key, value]) => (
                     <div key={key} className="flex justify-between">
                       <span className="text-gray-600 capitalize">{key}:</span>
-                      <span className="font-medium">{value}</span>
+                      <span className="font-medium">{value as any}</span>
                     </div>
                   ))}
                 </div>

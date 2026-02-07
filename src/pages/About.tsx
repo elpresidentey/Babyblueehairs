@@ -100,7 +100,7 @@ export default function About() {
                   description: "We never compromise on quality. Every product is rigorously tested to ensure it meets our premium standards."
                 },
                 {
-                  icon: <Heart className="w-8 h-8" />,
+                  icon: <Heart className="w-8 h-8 flex items-center justify-center" />,
                   title: "Customer Love",
                   description: "Your satisfaction is our priority. We're here to support you with expert advice and exceptional service."
                 },

@@ -158,7 +158,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             }`}
           >
             <Heart
-              className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`}
+              className={`w-5 h-5 flex items-center justify-center ${isWishlisted ? 'fill-current' : ''}`}
             />
           </motion.button>
 

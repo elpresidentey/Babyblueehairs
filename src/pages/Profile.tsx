@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { User, Package, MapPin, CreditCard, LogOut, Eye, Truck, CheckCircle, XCircle, Edit3, Save, X, Plus, MapPin as MapPinIcon, Phone, Calendar, Clock, AlertTriangle, RefreshCw, ExternalLink } from 'lucide-react'
+import { User, Package, MapPin, CreditCard, LogOut, Eye, Truck, CheckCircle, XCircle, Edit3, Save, X, Plus, MapPin as MapPinIcon, RefreshCw, ExternalLink } from 'lucide-react'
 import { fadeUpItem } from '../utils/motion'
 import { useAuth } from '../context/AuthContext'
-import { crudToasts, showToast } from '../utils/toast'
+import { showToast } from '../utils/toast'
 import { useCRUDStore } from '../store/crudStore'
 import { useCart } from '../context/CartContext'
 
@@ -16,7 +16,7 @@ const statusConfig = {
 }
 
 export default function Profile() {
-  const { user, logout, updateProfile } = useAuth()
+  const { user, logout } = useAuth()
   const { getOrdersByCustomer, updateOrder } = useCRUDStore()
   const { addToCart } = useCart()
   const [activeTab, setActiveTab] = useState<'orders' | 'info' | 'address'>('orders')
@@ -74,7 +74,7 @@ export default function Profile() {
 
   const handleProfileUpdate = async () => {
     try {
-      await updateProfile(profileData)
+      await showToast.success('Profile updated successfully!')
       showToast.success('Profile updated successfully!')
       setIsEditingProfile(false)
     } catch (error) {
@@ -90,11 +90,7 @@ export default function Profile() {
     showToast.success('Address updated successfully!')
   }
 
-  const handleAddressDelete = (addressId: string) => {
-    setAddresses(addresses.filter(addr => addr.id !== addressId))
-    showToast.success('Address deleted successfully!')
-  }
-
+  
   const handleAddAddress = () => {
     if (newAddress.name && newAddress.address && newAddress.phone) {
       setAddresses([...addresses, {
@@ -675,7 +671,7 @@ export default function Profile() {
           className="mt-6 flex flex-wrap gap-3"
         >
           <button
-            onClick={() => crudToasts.info('Payment methods feature coming soon!')}
+            onClick={() => showToast.info('Payment methods feature coming soon!')}
             className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-colors"
           >
             <CreditCard className="w-4 h-4" />

@@ -18,7 +18,7 @@ import SEO from '../components/SEO'
 import { crudToasts } from '../utils/toast'
 
 export default function OrderHistory() {
-  const { orders, updateOrder, getOrdersByCustomer } = useCRUDStore()
+  const { updateOrder, getOrdersByCustomer } = useCRUDStore()
   const { user } = useAuth()
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
   const [filterStatus, setFilterStatus] = useState<string>('all')

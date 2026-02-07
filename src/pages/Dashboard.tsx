@@ -28,7 +28,7 @@ export default function Dashboard() {
 
   const tabs = [
     { id: 'orders', label: 'Orders', icon: Package },
-    { id: 'wishlist', label: 'Wishlist', icon: Heart },
+    { id: 'wishlist', label: 'Wishlist', icon: () => <Heart className="w-5 h-5 flex items-center justify-center" /> },
     { id: 'addresses', label: 'Addresses', icon: MapPin },
     { id: 'profile', label: 'Profile', icon: User },
   ]
