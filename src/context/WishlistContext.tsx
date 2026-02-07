@@ -35,10 +35,12 @@ export const useWishlist = create<WishlistStore>()(
       items: [],
       
       addToWishlist: (product) => {
+        console.log('WishlistContext addToWishlist called:', product.name, product.id)
         set((state) => {
           const exists = state.items.find((item) => item.id === product.id)
           if (exists) return state
           
+          console.log('Adding to wishlist state:', { ...product, addedAt: new Date() })
           return {
             items: [...state.items, { ...product, addedAt: new Date() }],
           }

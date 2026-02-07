@@ -78,10 +78,13 @@ export default function ProductCard({ product }: ProductCardProps) {
   const handleWishlist = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
+    console.log('Wishlist button clicked:', product.name, 'isWishlisted:', isWishlisted)
     if (isWishlisted) {
+      console.log('Removing from wishlist:', product.id)
       removeFromWishlist(product.id)
       crudToasts.wishlistRemoved(product.name)
     } else {
+      console.log('Adding to wishlist:', product.id)
       addToWishlist(product)
       crudToasts.wishlistAdded(product.name)
     }
